@@ -3,7 +3,8 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 // import { EnvModule } from './env.module';
 import * as dotenv from 'dotenv';
-import { Entity } from 'src/entitys';
+import { Entities } from 'entitys';
+
 
 // import { EnvService } from './env.service';
 dotenv.config();
@@ -18,7 +19,7 @@ export const options: TypeOrmModuleOptions = {
     process.env.NODE_ENV === 'tEsT'
       ? process.env.DB_NAME + '_test'
       : process.env.DB_NAME || 'postgres',
-  entities: Entity,
+  entities: Entities,
   migrationsRun: true,
   synchronize: false,
 };

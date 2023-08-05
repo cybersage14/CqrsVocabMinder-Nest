@@ -13,11 +13,15 @@ export class UsersService {
   ) {}
 
   async getUserById(id: number) {
-    return this.userRepository.findOne({ id });
+    return this.userRepository.findOne({ where:{
+      id
+    } });
   }
 
   async getUserByEmail(email: string) {
-    return await this.userRepository.findOne({ email });
+    return await this.userRepository.findOne({ where: {
+      email
+    }});
   }
 
   async createUser(registerRequestDto: RegisterRequestDto ) {

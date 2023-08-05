@@ -3,12 +3,13 @@ import {
   Column,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { PasswordTransformer } from './password.transformer';
+
+import { PasswordTransformer } from '../common/helper/password.transformer';
 
 @Entity({
   name: 'users',
 })
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -32,11 +33,4 @@ export class User {
     const { password, ...self } = this;
     return self;
   }
-}
-
-export class UserFillableFields {
-  email: string;
-  firstName: string;
-  lastName: string;
-  password: string;
 }

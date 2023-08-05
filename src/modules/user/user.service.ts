@@ -1,26 +1,27 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from 'entities';
+import { RegisterRequestDto } from 'modules/auth';
 import { Repository } from 'typeorm';
 
-import { User, UserFillableFields } from './user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async get(id: number) {
+  async getUserById(id: number) {
     return this.userRepository.findOne({ id });
   }
 
-  async getByEmail(email: string) {
+  async getUserByEmail(email: string) {
     return await this.userRepository.findOne({ email });
   }
 
-  async create(payload: UserFillableFields) {
-    const user = await this.getByEmail(payload.email);
+  async createUser(registerRequestDto: RegisterRequestDto ) {
+    const user = await this.getUserByEmail(registerRequestDto.email);
 
     if (user) {
       throw new NotAcceptableException(
@@ -28,6 +29,6 @@ export class UsersService {
       );
     }
 
-    return await this.userRepository.save(payload);
+    return await this.userRepository.save(registerRequestDto);
   }
 }

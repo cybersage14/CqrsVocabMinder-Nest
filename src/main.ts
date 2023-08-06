@@ -12,6 +12,6 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalPipes(new TrimStringsPipe(), new ValidationPipe());
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  await app.listen(3001);
+  await app.listen(3003);
 }
 bootstrap();

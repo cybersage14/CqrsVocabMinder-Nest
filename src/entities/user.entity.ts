@@ -37,6 +37,9 @@ export class UserEntity  extends BaseModel  {
   @OneToMany(()=>WordsBoxEntity,(wordsBox)=>wordsBox.user)
   wordsBoxes: WordsBoxEntity[];
   
+  @OneToMany(()=>WordEntity,(word)=>word.user)
+  words: WordEntity[];
+
   toJSON() {
     const { password, ...self } = this;
     return self;

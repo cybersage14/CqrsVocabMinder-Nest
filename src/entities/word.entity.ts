@@ -33,10 +33,10 @@ export class WordEntity extends BaseModel {
     /* -------------------------------------------------------------------------- */
 
     @ManyToOne(() => UserEntity)
-    @JoinColumn({ name: 'words_box_id', referencedColumnName: 'id' })
+    // @JoinColumn({ name: 'words_box_id', referencedColumnName: 'id', })
     wordsBoxes: WordsBoxEntity[];
 
     @ManyToOne(() => UserEntity)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    // @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
     user: UserEntity
 }

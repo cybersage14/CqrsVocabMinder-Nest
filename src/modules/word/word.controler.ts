@@ -21,6 +21,8 @@ export class WordController {
         @CurrentUser() userId:string,
         @Body() createWordRequestDto: CreateWordRequestDto
     ){
-        await this.commandBus.execute(new CreateWordCommand(userId,createWordRequestDto));
+        console.log(userId);
+        
+       return await this.commandBus.execute(new CreateWordCommand(userId,createWordRequestDto));
     }
 }

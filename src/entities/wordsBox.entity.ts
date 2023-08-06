@@ -40,9 +40,6 @@ export class WordsBoxEntity extends BaseModel {
     @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
     user: UserEntity;
 
-    @Column({ name: 'user_id',type:'uuid' })
-    userId: UserEntity
-
     @ManyToMany(() => BoxEntity, (box) => box.wordsBoxes)
     Box: BoxEntity[]
 

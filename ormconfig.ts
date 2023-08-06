@@ -18,9 +18,9 @@ export const options: DataSourceOptions = {
   synchronize: true,
   name: 'default',
   migrationsTableName: 'migrations',
-  entities: ['dist/entities /*.entity{.ts,.js}'],
-  migrations: ['dist/migrations/**/*{.ts,.js}'],
-  // subscribers: [join(__dirname, 'src/subscriber/**/*{.ts,.js}')],
+  entities: [join(__dirname, 'dist/src/entities/**.entity{.ts,.js}')],
+  migrations: [join(__dirname, 'dist/src/migration/**/*{.ts,.js}')],
+  subscribers: [join(__dirname, 'src/subscriber/**/*{.ts,.js}')],
 };
 console.log(options);
 

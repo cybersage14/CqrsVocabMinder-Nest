@@ -11,7 +11,14 @@
      "target": "es6",
      "sourceMap": true,
      "outDir": "./dist",
-     "baseUrl": "./src"
+     "baseUrl": "./src",
+     "paths": {
+      "@src/*": ["./src/*"],
+      "@src/entities/*": ["./src/entities/*"],
+      "@src/errors/*": ["./src/common/errors/*"],
+      "@src/shared/functions/*": ["./src/modules/shared/functions/*"],
+      "@test/*": ["./test/*"]
+    }
    },
    "include": [
      "src/**/*"

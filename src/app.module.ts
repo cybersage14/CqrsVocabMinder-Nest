@@ -6,6 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './common/database/database.module';
 import { EnvModule } from './common/database/env.module';
+import { CqrsModule } from '@nestjs/cqrs';
+import { WordModule } from './modules/word/word.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { EnvModule } from './common/database/env.module';
     AuthModule,
     CommonModule,
     EnvModule,
+    CqrsModule,
+    WordModule,
   ],
   controllers: [AppController],
   providers: [AppService],

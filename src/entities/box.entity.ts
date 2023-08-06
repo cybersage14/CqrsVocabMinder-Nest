@@ -17,10 +17,7 @@ export class BoxEntity extends BaseModel {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @Column({ name: 'user_id', type: 'uuid' })
-  userId: UserEntity
-
   @ManyToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.Box)
-  @JoinColumn({ name: 'words_box_id' })
+  @JoinColumn({ name: 'words_box_id', referencedColumnName: 'id' })
   wordsBoxes: WordsBoxEntity[];
 }

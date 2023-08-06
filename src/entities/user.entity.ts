@@ -9,6 +9,7 @@ import { PasswordTransformer } from '../common/helper/password.transformer';
 import BaseModel from './base.model';
 import { WordsBoxEntity } from './wordsBox.entity';
 import { BoxEntity } from './box.entity';
+import { WordEntity } from './word.entity';
 
 @Entity({
   name: 'user',
@@ -34,8 +35,8 @@ export class UserEntity  extends BaseModel  {
   boxes: BoxEntity[]
 
   @OneToMany(()=>WordsBoxEntity,(wordsBox)=>wordsBox.user)
-  wordsBoxes: WordsBoxEntity[]
-
+  wordsBoxes: WordsBoxEntity[];
+  
   toJSON() {
     const { password, ...self } = this;
     return self;

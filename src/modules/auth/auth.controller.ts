@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService, LoginRequestDto, RegisterRequestDto } from './';
 import { CurrentUser } from '../../common/decorator/current-user.decorator';
 import { UsersService } from './../user';
 import { UserEntity } from '../../entities';
+import { JwtAuthGuard } from './../../common/guard/jwt-guard';
 
 @Controller('/auth')
 @ApiTags('authentication')
@@ -33,7 +33,7 @@ export class AuthController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(AuthGuard())
+  @UseGuards(JwtAuthGuard)
   @Get('me')
   @ApiResponse({ status: 200, description: 'Successful Response' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })

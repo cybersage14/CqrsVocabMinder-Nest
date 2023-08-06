@@ -4,7 +4,7 @@ import { Hash } from '../../common/utils/Hash';
 import { ConfigService } from '../../config';
 import {  UsersService } from './../user';
 import { LoginRequestDto } from './dto/login.request.dto';
-import { UserEntity } from 'entities';
+import { UserEntity } from '../../entities';
 
 @Injectable()
 export class AuthService {

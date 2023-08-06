@@ -4,8 +4,8 @@ import { CommonModule } from './common';
 import { ConfigModule } from './config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DatabaseModule } from 'common/database/database.module';
-import { EnvModule } from 'common/database/env.module';
+import { DatabaseModule } from './common/database/database.module';
+import { EnvModule } from './common/database/env.module';
 
 @Module({
   imports: [

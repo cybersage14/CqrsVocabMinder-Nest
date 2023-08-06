@@ -4,7 +4,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService, LoginRequestDto, RegisterRequestDto } from './';
 import { CurrentUser } from '../../common/decorator/current-user.decorator';
 import { UsersService } from './../user';
-import { UserEntity } from 'entities';
+import { UserEntity } from '../../entities';
 
 @Controller('/auth')
 @ApiTags('authentication')

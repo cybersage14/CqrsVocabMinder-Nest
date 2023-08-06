@@ -1,8 +1,8 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'entities';
-import { RegisterRequestDto } from 'modules/auth';
 import { Repository } from 'typeorm';
+import { UserEntity } from '../../entities';
+import { RegisterRequestDto } from '../auth';
 
 
 @Injectable()
@@ -12,9 +12,9 @@ export class UsersService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async getUserById(id: number) {
+  async getUserById(id: string) {
     return this.userRepository.findOne({ where:{
-      id
+      id: id
     } });
   }
 

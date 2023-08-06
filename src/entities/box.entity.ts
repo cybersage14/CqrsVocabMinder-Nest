@@ -13,7 +13,7 @@ export class BoxEntity extends BaseModel {
   /*                                 Foreign key                                */
   /* -------------------------------------------------------------------------- */
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UserEntity,)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
@@ -21,5 +21,6 @@ export class BoxEntity extends BaseModel {
   userId: UserEntity
 
   @ManyToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.Box)
+  @JoinColumn({ name: 'words_box_id' })
   wordsBoxes: WordsBoxEntity[];
 }

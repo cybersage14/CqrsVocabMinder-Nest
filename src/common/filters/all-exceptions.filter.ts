@@ -13,7 +13,7 @@ import {
   import { Logger } from 'winston';
   
   import { INTERNAL_SERVER_ERROR } from '../errors';
-import { createErrorLog } from 'common/helper';
+import { createErrorLog } from '../helper';
   
   @Catch()
   export class AllExceptionsFilter implements ExceptionFilter {

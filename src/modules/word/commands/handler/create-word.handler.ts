@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { CreateWordCommand } from "../impl";
 import { DataSource, QueryRunner } from "typeorm";
-import { CustomError, USER_NOT_FOUND } from "common/errors";
-import { UserEntity, WordEntity } from "./../../../../entities";
+import { CustomError, USER_NOT_FOUND } from "@src/common/errors";
+import { WordEntity, UserEntity } from "@src/entities";
 
 @CommandHandler(CreateWordCommand)
 export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
@@ -11,7 +11,7 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
     async execute(command: CreateWordCommand): Promise<WordEntity> {
 
         const { userId, createWordRequestDto } = command;
-        const { definition, usage, pronounce, word } = createWordRequestDto;
+        const { definition, usage, pronounce, word, example } = createWordRequestDto;
 
         this.queryRunner = this.dataSource.createQueryRunner();
         try {
@@ -29,8 +29,6 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
                     id: userId
                 }
             })
-            console.log("userr", user);
-
             if (!user) {
                 throw new CustomError(USER_NOT_FOUND)
             }
@@ -41,12 +39,13 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
                 definition,
                 usage,
                 pronounce,
+                example,
                 word,
                 user
             })
-            console.log("createWord", createWord);
-
             const saveWord = await this.queryRunner.manager.save(createWord);
+            
+            await this.queryRunner.commitTransaction();
             return Promise.resolve(saveWord);
         } catch (err) {
             console.log(err);

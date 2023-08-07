@@ -21,4 +21,9 @@ export class CreateWordRequestDto {
     @IsString()
     @IsNotEmpty()
     pronounce: string;
+
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    example: string;
 }

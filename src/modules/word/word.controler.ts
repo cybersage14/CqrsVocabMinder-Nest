@@ -1,28 +1,39 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
-import { CommandBus } from "@nestjs/cqrs";
+import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
+import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { ApiBearerAuth, ApiProperty, ApiTags } from "@nestjs/swagger";
 import { CreateWordRequestDto } from "./dto/create-word.request.dto";
 import { CreateWordCommand } from "./commands/impl";
 import { CurrentUser } from "../../common/decorator/current-user.decorator";
 import { JwtAuthGuard } from "./../../common/guard/jwt-guard";
+import { GetWordsQuery } from "./queries/impl";
+import { GetWordsRequestDto } from "./dto/get-words.request.dto";
 
 @Controller('/word')
 @ApiTags('word')
 export class WordController {
     constructor(
         private readonly commandBus: CommandBus,
-    ){}
+        private readonly queryBus: QueryBus
+    ) { }
 
     @ApiProperty({})
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @Post()
     async createWord(
-        @CurrentUser() userId:string,
+        @CurrentUser() userId: string,
         @Body() createWordRequestDto: CreateWordRequestDto
-    ){
-        console.log(userId);
-        
-       return await this.commandBus.execute(new CreateWordCommand(userId,createWordRequestDto));
+    ) {
+        return await this.commandBus.execute(new CreateWordCommand(userId, createWordRequestDto));
+    }
+
+    @Get()
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
+    async getWords(
+        @Query() query: GetWordsRequestDto,
+        @CurrentUser() userId: string
+    ) {
+        return await this.queryBus.execute(new GetWordsQuery(userId, query));
     }
 }

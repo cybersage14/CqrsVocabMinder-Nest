@@ -1,4 +1,4 @@
-import { CreateWordRequestDto } from "modules/word/dto";
+import { CreateWordRequestDto } from "../../dto";
 
 export class CreateWordCommand {
     constructor(

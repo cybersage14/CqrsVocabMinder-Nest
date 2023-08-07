@@ -25,6 +25,9 @@ export class WordEntity extends BaseModel {
     @Column({ type: 'varchar', name: 'pronounce' })
     pronounce: string;
 
+    @Column({ type: 'varchar', name: 'example' })
+    example: string;
+
     /* -------------------------------------------------------------------------- */
     /*                                 Foreign key                                */
     /* -------------------------------------------------------------------------- */

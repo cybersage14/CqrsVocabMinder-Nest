@@ -1,0 +1,1 @@
+export * from './create-words-box.request.dto'

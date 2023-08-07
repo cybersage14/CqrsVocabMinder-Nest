@@ -1,12 +1,9 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-// import { EnvModule } from './env.module';
 import * as dotenv from 'dotenv';
 import { entities } from './../../entities';
 
-
-// import { EnvService } from './env.service';
 dotenv.config();
 
 export const options: TypeOrmModuleOptions = {
@@ -25,13 +22,11 @@ export const options: TypeOrmModuleOptions = {
 
 };
 function DatabaseOrmModule(): DynamicModule {
-  // const config = new EnvService().read();
   return TypeOrmModule.forRoot(options);
 }
 
 @Global()
 @Module({
   imports: [DatabaseOrmModule()],
-  // imports: [EnvModule, DatabaseOrmModule()],
 })
 export class DatabaseModule {}

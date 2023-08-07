@@ -3,6 +3,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
+  JoinTable,
+  JoinColumn,
 } from 'typeorm';
 
 import { PasswordTransformer } from '../common/helper/password.transformer';
@@ -14,7 +16,7 @@ import { WordEntity } from './word.entity';
 @Entity({
   name: 'user',
 })
-export class UserEntity  extends BaseModel  {
+export class UserEntity extends BaseModel {
   @Column({ length: 255 })
   firstName: string;
 
@@ -27,21 +29,27 @@ export class UserEntity  extends BaseModel  {
   @Column({
     name: 'password',
     length: 255,
+    // this is for the password encryption
     transformer: new PasswordTransformer(),
   })
   password: string;
 
-  @OneToMany(()=>BoxEntity,(box)=>box.user)
-  boxes: BoxEntity[]
-
-  @OneToMany(()=>WordsBoxEntity,(wordsBox)=>wordsBox.user)
-  wordsBoxes: WordsBoxEntity[];
-  
-  @OneToMany(()=>WordEntity,(word)=>word.user)
-  words: WordEntity[];
-
-  toJSON() {
+   // exclude password from the response
+   toJSON() {
     const { password, ...self } = this;
     return self;
   }
+
+  /* -------------------------------------------------------------------------- */
+  /*                                foreign key                                */
+  /* -------------------------------------------------------------------------- */
+
+  @OneToMany(() => BoxEntity, (box) => box.user,)
+  box: BoxEntity[]
+
+  @OneToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.user)
+  wordsBoxes: WordsBoxEntity[];
+
+  @OneToMany(() => WordEntity, (word) => word.user)
+  words: WordEntity[];
 }

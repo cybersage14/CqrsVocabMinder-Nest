@@ -1,10 +1,7 @@
 import {
     Entity,
     Column,
-    JoinTable,
-    OneToMany,
     ManyToOne,
-    JoinColumn,
 } from 'typeorm';
 
 import BaseModel from './base.model';
@@ -32,11 +29,9 @@ export class WordEntity extends BaseModel {
     /*                                 Foreign key                                */
     /* -------------------------------------------------------------------------- */
 
-    @ManyToOne(() => UserEntity)
-    // @JoinColumn({ name: 'words_box_id', referencedColumnName: 'id', })
+    @ManyToOne(() => WordsBoxEntity, (wordsBox) => wordsBox.words,)
     wordsBoxes: WordsBoxEntity[];
 
-    @ManyToOne(() => UserEntity)
-    // @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    @ManyToOne(() => UserEntity, (user) => user.words, { cascade: true})
     user: UserEntity
 }

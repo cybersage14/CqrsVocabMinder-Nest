@@ -1,9 +1,12 @@
 import {
     Entity,
     Column,
-    JoinColumn,
     ManyToOne,
     ManyToMany,
+    Unique,
+    JoinTable,
+    OneToMany,
+    JoinColumn,
 } from 'typeorm';
 
 import BaseModel from './base.model';
@@ -12,17 +15,16 @@ import { WordEntity } from './word.entity';
 import { BoxEntity } from './box.entity';
 
 @Entity({
-    name: 'words_box',
+    name: 'words_box'
 })
+@Unique('word_box_unique', ['name'])
 export class WordsBoxEntity extends BaseModel {
 
-    @Column({ name: 'name', type: 'varchar' })
+    @Unique('word_box_unique', ['name'])
+    @Column({ name: 'name', type: 'varchar', unique: true, nullable: false })
     name: string;
 
-    @Column()
-    wordsBox: string;
-
-    @Column({ default: false , name: 'is_learned' })
+    @Column({ default: false, name: 'is_learned' })
     is_learned: boolean;
 
     @Column({ type: 'timestamp', nullable: true })
@@ -32,15 +34,14 @@ export class WordsBoxEntity extends BaseModel {
     /*                                 Foreign key                                */
     /* -------------------------------------------------------------------------- */
 
-    @ManyToOne(() => WordEntity)
-    @JoinColumn({ name: 'word_id', referencedColumnName: 'id' })
+    @OneToMany(() => WordEntity, (word) => word.wordsBoxes, { cascade: true })
+    @JoinColumn({ name: 'wordsBoxesId' })
     words: WordEntity[];
 
-    @ManyToOne(() => UserEntity)
-    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    @ManyToOne(() => UserEntity, (user) => user.wordsBoxes, { cascade: true })
     user: UserEntity;
 
-    @ManyToMany(() => BoxEntity, (box) => box.wordsBoxes)
+    @ManyToMany(() => BoxEntity, (box) => box.wordsBoxes, { cascade: true, })
     Box: BoxEntity[]
 
     markWordAsLearned(): void {

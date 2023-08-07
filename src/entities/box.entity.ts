@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, JoinColumn, BaseEntity, ManyToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { WordsBoxEntity } from './wordsBox.entity';
 import BaseModel from './base.model';
@@ -6,18 +6,17 @@ import BaseModel from './base.model';
 @Entity({ name: 'box' })
 export class BoxEntity extends BaseModel {
 
-  @Column({name: 'name', type: 'varchar'})
+  @Column({ name: 'name', type: 'varchar', unique: true })
   name: string;
 
   /* -------------------------------------------------------------------------- */
   /*                                 Foreign key                                */
   /* -------------------------------------------------------------------------- */
 
-  @ManyToOne(() => UserEntity,)
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => UserEntity, (user) => user.box, { cascade: true })
   user: UserEntity;
 
-  @ManyToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.Box)
-  @JoinColumn({ name: 'words_box_id', referencedColumnName: 'id' })
+  @ManyToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.Box,)
+  @JoinTable({ name: 'wordsBox' })
   wordsBoxes: WordsBoxEntity[];
 }

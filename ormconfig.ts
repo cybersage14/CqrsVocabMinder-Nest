@@ -14,7 +14,7 @@ export const options: DataSourceOptions = {
     process.env.NODE_ENV === 'tEsT'
       ? process.env.DB_NAME + '_test'
       : process.env.DB_NAME,
-  logging: false,
+  logging: true,
   synchronize: true,
   name: 'default',
   migrationsTableName: 'migrations',

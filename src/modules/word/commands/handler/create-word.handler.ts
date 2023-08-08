@@ -1,8 +1,8 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { CreateWordCommand } from "../impl";
 import { DataSource, QueryRunner } from "typeorm";
-import { CustomError, USER_NOT_FOUND } from "@src/common/errors";
-import { WordEntity, UserEntity } from "@src/entities";
+import { WordEntity } from "@src/entities";
+import { GetUser } from "@src/modules/shared/functions";
 
 @CommandHandler(CreateWordCommand)
 export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
@@ -20,22 +20,15 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
             /* -------------------------------------------------------------------------- */
             await this.queryRunner.connect();
             await this.queryRunner.startTransaction();
-
+            const manager = this.queryRunner.manager;
             /* -------------------------------------------------------------------------- */
             /*                                  get user                                  */
             /* -------------------------------------------------------------------------- */
-            const user = await this.queryRunner.manager.findOne(UserEntity, {
-                where: {
-                    id: userId
-                }
-            })
-            if (!user) {
-                throw new CustomError(USER_NOT_FOUND)
-            }
+            const user = await GetUser(manager,{ id: userId })
             /* -------------------------------------------------------------------------- */
             /*                                 create word                                */
             /* -------------------------------------------------------------------------- */
-            const createWord = this.queryRunner.manager.create(WordEntity, {
+            const createWord = await this.queryRunner.manager.save(WordEntity, {
                 definition,
                 usage,
                 pronounce,
@@ -43,10 +36,8 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
                 word,
                 user
             })
-            const saveWord = await this.queryRunner.manager.save(createWord);
-            
             await this.queryRunner.commitTransaction();
-            return Promise.resolve(saveWord);
+            return Promise.resolve(createWord);
         } catch (err) {
             console.log(err);
             await this.queryRunner.rollbackTransaction()

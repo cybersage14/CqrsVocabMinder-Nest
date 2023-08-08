@@ -6,6 +6,7 @@ import { UserModule } from './../user';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
+import { CommonModule } from '@src/common';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthController } from './auth.controller';
       },
       inject: [ConfigService],
     }),
+    CommonModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

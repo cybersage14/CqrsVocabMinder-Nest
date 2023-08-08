@@ -8,6 +8,7 @@ import { DatabaseModule } from './common/database/database.module';
 import { EnvModule } from './common/database/env.module';
 import { CqrsModule } from '@nestjs/cqrs';
 import { WordModule } from './modules/word/word.module';
+import { WordsBoxModule } from './modules/wordsbox/wordsBox.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { WordModule } from './modules/word/word.module';
     EnvModule,
     CqrsModule,
     WordModule,
+    WordsBoxModule
   ],
   controllers: [AppController],
   providers: [AppService],

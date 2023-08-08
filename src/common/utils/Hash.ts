@@ -6,7 +6,7 @@ export class Hash {
     return bcrypt.hashSync(plainText, salt);
   }
 
-  static compare(plainText, hash) {
-    return bcrypt.compareSync(plainText, hash);
+  static async compare(plainText, hash) {
+    return await bcrypt.compare(plainText, hash);
   }
 }

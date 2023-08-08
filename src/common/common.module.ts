@@ -1,9 +1,8 @@
 import { Global, Module } from '@nestjs/common';
-// import { ExistsValidator } from './validator/exists.validator';
-// import { UniqueValidator } from './validator/unique.validator';
+import { IsUniqueConstraint, } from './validator/unique.validator';
 
 @Global()
 @Module({
-  // providers: [UniqueValidator, ExistsValidator],
+  providers: [IsUniqueConstraint],
 })
 export class CommonModule {}

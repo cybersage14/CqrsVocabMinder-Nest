@@ -36,7 +36,7 @@ export class WordsBoxEntity extends BaseModel {
 
     @OneToMany(() => WordEntity, (word) => word.wordsBoxes, { cascade: true })
     @JoinColumn({ name: 'wordsBoxesId' })
-    words: WordEntity[];
+    words: WordEntity [];
 
     @ManyToOne(() => UserEntity, (user) => user.wordsBoxes, { cascade: true })
     user: UserEntity;

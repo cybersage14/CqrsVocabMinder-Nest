@@ -1,6 +1,6 @@
 // import { Injectable } from '@nestjs/common';
-// import { InjectConnection } from '@nestjs/typeorm';
-// import { Connection, EntitySchema, FindConditions, ObjectType } from 'typeorm';
+// import { InjectConnection, InjectQueryRunner } from '@nestjs/typeorm';
+// import { Connection, EntitySchema, ObjectType, QueryRunner } from 'typeorm';
 // import {
 //   ValidatorConstraint,
 //   ValidatorConstraintInterface,
@@ -12,32 +12,36 @@
 // @Injectable()
 // @ValidatorConstraint({ name: 'exists', async: true })
 // export class ExistsValidator implements ValidatorConstraintInterface {
-//   constructor(@InjectConnection() private readonly connection: Connection) {}
+//   constructor(
+//     @InjectConnection() private readonly connection: Connection,
+//     @InjectQueryRunner() private readonly queryRunner: QueryRunner,
+//   ) {}
 
 //   public async validate<E>(value: string, args: ExistsValidationArguments<E>) {
 //     const [EntityClass, findCondition = args.property] = args.constraints;
-//     return (
-//       (await this.connection.getRepository(EntityClass).count({
-//         where:
-//           typeof findCondition === 'function'
-//             ? findCondition(args)
-//             : {
-//                 [findCondition || args.property]: value,
-//               },
-//       })) > 0
+//     const queryRunner = this.queryRunner;
+    
+//     const count = await queryRunner.query(
+//       `SELECT COUNT(*) FROM ${EntityClass.name} WHERE ${
+//         typeof findCondition === 'function'
+//           ? findCondition(args)
+//           : `${findCondition || args.property} = '${value}'`
+//       }`,
 //     );
+
+//     return count > 0;
 //   }
 
 //   defaultMessage(args: ValidationArguments) {
 //     const [EntityClass] = args.constraints;
 //     const entity = EntityClass.name || 'Entity';
-//     return `The selected ${args.property}  does not exist in ${entity} entity`;
+//     return `The selected ${args.property} does not exist in ${entity} entity`;
 //   }
 // }
 
 // type ExistsValidationConstraints<E> = [
 //   ObjectType<E> | EntitySchema<E> | string,
-//   ((validationArguments: ValidationArguments) => FindConditions<E>) | keyof E,
+//   ((validationArguments: ValidationArguments) => string) | keyof E,
 // ];
 // interface ExistsValidationArguments<E> extends ValidationArguments {
 //   constraints: ExistsValidationConstraints<E>;

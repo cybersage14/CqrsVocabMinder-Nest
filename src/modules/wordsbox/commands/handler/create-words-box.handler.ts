@@ -1,9 +1,11 @@
-import { ICommandHandler } from "@nestjs/cqrs";
-import { CreateWordsBoxCommand } from "../impl/create-words-box.command";
+import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { DataSource, QueryRunner } from "typeorm";
 import { UserEntity, WordsBoxEntity } from "@src/entities";
 import { CustomError, USER_NOT_FOUND } from "@src/common/errors";
+import { CreateWordsBoxCommand } from "../impl";
+import { HttpStatus } from "@nestjs/common";
 
+@CommandHandler(CreateWordsBoxCommand)
 export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxCommand> {
     queryRunner: QueryRunner;
     constructor(private dataSource: DataSource) { }
@@ -25,16 +27,30 @@ export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxComm
             if (!user) {
                 throw new CustomError(USER_NOT_FOUND)
             }
+            
 
-            const wordsBox = this.queryRunner.manager.create(WordsBoxEntity, {
-                name,
+            const wordsBox = await this.queryRunner.manager.findOne(WordsBoxEntity, {
+                where: {
+                    name
+                }
             })
-            const saveWordsBox = await this.queryRunner.manager.save(wordsBox)
+            console.log(wordsBox);
+            
+            if(wordsBox) {
+                throw new CustomError({
+                    description: "Word already exists",
+                    status: HttpStatus.BAD_REQUEST,
+                })
+            }
+
+            const saveWordsBox = this.queryRunner.manager.create(WordsBoxEntity, {
+                name
+            })
+            await this.queryRunner.manager.save(WordsBoxEntity, saveWordsBox)
 
             await this.queryRunner.commitTransaction();
             return Promise.resolve(saveWordsBox)
         } catch (err) {
-            console.log(err);
             await this.queryRunner.rollbackTransaction()
             throw err
         } finally {

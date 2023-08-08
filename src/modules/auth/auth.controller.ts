@@ -20,6 +20,8 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async login(@Body() loginRequestDto: LoginRequestDto): Promise<any> {
     const user = await this.authService.validateUser(loginRequestDto);
+    console.log(1,user);
+    
     return await this.authService.createToken(user);
   }
 
@@ -29,6 +31,8 @@ export class AuthController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async register(@Body() registerRequestDto: RegisterRequestDto): Promise<any> {
     const user = await this.userService.createUser(registerRequestDto);
+    console.log(222,user);
+     
     return await this.authService.createToken(user);
   }
 

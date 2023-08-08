@@ -26,7 +26,8 @@ export class UsersService {
 
   async createUser(registerRequestDto: RegisterRequestDto ) {
     const user = await this.getUserByEmail(registerRequestDto.email);
-
+    console.log("user",user);
+    
     if (user) {
       throw new NotAcceptableException(
         'User with provided email already created.',

@@ -24,7 +24,13 @@ export class AuthService {
 
   async validateUser(payload: LoginRequestDto): Promise<any> {
     const user = await this.userService.getUserByEmail(payload.email);
-    if (!user || !Hash.compare(payload.password, user.password)) {
+    console.log(user);
+    console.log(payload);
+    
+    const isMatch = await Hash.compare(payload.password, user.password)
+      console.log(isMatch);
+      
+    if (!user || !isMatch) {
       throw new UnauthorizedException('Invalid credentials!');
     }
     return user;

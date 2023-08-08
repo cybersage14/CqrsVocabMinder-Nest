@@ -16,9 +16,9 @@ export class WordController {
         private readonly queryBus: QueryBus
     ) { }
 
-    @ApiProperty({})
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
+    @ApiProperty({})
     @Post()
     async createWord(
         @CurrentUser() userId: string,

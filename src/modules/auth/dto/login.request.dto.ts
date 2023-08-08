@@ -7,6 +7,7 @@ export class LoginRequestDto {
   })
   @IsEmail()
   email: string;
+  
   @ApiProperty({
     required: true,
   })

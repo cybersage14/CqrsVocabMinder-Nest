@@ -1,11 +1,13 @@
-import { Body, Controller, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Param, ParseUUIDPipe, Post, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { CreateWordsBoxRequestDto } from "./dto";
+import { AddWordToBoxRequestDto, CreateWordsBoxRequestDto } from "./dto";
 import { CurrentUser } from "@src/common/decorator/current-user.decorator";
 import { CreateWordsBoxCommand } from "./commands/impl/create-words-box.command";
-import { ApiProperty, ApiBearerAuth } from "@nestjs/swagger";
+import { ApiProperty, ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "@src/common/guard/jwt-guard";
+import { AddWordToBox } from "./commands/impl/add-word-to-box.command";
 
+@ApiTags('words-box')
 @Controller('/words-box')
 export class WordsBoxController{
     constructor(
@@ -22,5 +24,21 @@ export class WordsBoxController{
         @CurrentUser() userId: string
     ){
         return this.commandBus.execute(new CreateWordsBoxCommand(userId, createWordRequestDto));
+    }
+
+    @ApiProperty({})
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @Post('/add-word-to-box/:boxId')
+    addWordToBox(
+        @Body() addWordToBoxRequestDto: AddWordToBoxRequestDto,
+        @Param('boxId',new ParseUUIDPipe({version:'4'})) boxId: string,
+        @CurrentUser() userId: string,
+    ){
+        console.log("11",addWordToBoxRequestDto);
+        
+        console.log(boxId);
+        
+        return this.commandBus.execute(new AddWordToBox(userId,boxId,addWordToBoxRequestDto));
     }
 }

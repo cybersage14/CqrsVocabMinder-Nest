@@ -12,6 +12,7 @@ import BaseModel from './base.model';
 import { WordsBoxEntity } from './wordsBox.entity';
 import { BoxEntity } from './box.entity';
 import { WordEntity } from './word.entity';
+import { IsUnique } from '@src/common/validator/unique.validator';
 
 @Entity({
   name: 'user',
@@ -22,7 +23,7 @@ export class UserEntity extends BaseModel {
 
   @Column({ length: 255 })
   lastName: string;
-
+  // @IsUnique({ always: true, message: 'username already exists' })
   @Column({ length: 255 })
   email: string;
 

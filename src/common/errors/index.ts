@@ -20,3 +20,12 @@ export const USER_NOT_FOUND : ICustomError = {
     status:HttpStatus.NOT_FOUND,
     description:'user not found'
 }
+export const WORDS_BOX_NOT_FOUND : ICustomError = {
+  status:HttpStatus.NOT_FOUND,
+  description:'words box not found'
+}
+
+export const WORDS_BOX_ALREADY_EXISTS : ICustomError = {
+  description: "Word already exists",
+  status: HttpStatus.BAD_REQUEST,
+}

@@ -1,9 +1,10 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { DataSource, QueryRunner } from "typeorm";
-import { UserEntity, WordsBoxEntity } from "@src/entities";
-import { CustomError, USER_NOT_FOUND } from "@src/common/errors";
+import { WordsBoxEntity } from "@src/entities";
+import { CustomError, WORDS_BOX_ALREADY_EXISTS } from "@src/common/errors";
 import { CreateWordsBoxCommand } from "../impl";
-import { HttpStatus } from "@nestjs/common";
+import { GetUser } from "@src/modules/shared/functions";
+import { GetWordsBox } from "@src/modules/shared/functions/wordsBox.helper";
 
 @CommandHandler(CreateWordsBoxCommand)
 export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxCommand> {
@@ -15,46 +16,37 @@ export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxComm
         this.queryRunner = this.dataSource.createQueryRunner();
 
         try {
+            /* -------------------------------------------------------------------------- */
+            /*                              start transaction                             */
+            /* -------------------------------------------------------------------------- */
             await this.queryRunner.connect();
             await this.queryRunner.startTransaction();
-
-            const user = await this.queryRunner.manager.findOne(UserEntity, {
-                where: {
-                    id: userId
-                }
-            });
-
-            if (!user) {
-                throw new CustomError(USER_NOT_FOUND)
-            }
-            
-
-            const wordsBox = await this.queryRunner.manager.findOne(WordsBoxEntity, {
-                where: {
-                    name
-                }
-            })
-            console.log(wordsBox);
-            
-            if(wordsBox) {
-                throw new CustomError({
-                    description: "Word already exists",
-                    status: HttpStatus.BAD_REQUEST,
-                })
-            }
-
-            const saveWordsBox = this.queryRunner.manager.create(WordsBoxEntity, {
+            const manager = this.queryRunner.manager;
+            /* -------------------------------- get user -------------------------------- */
+            const user = await GetUser(manager, { id: userId })
+            /* ------------------------------ get words box ----------------------------- */
+            const wordsBox = await GetWordsBox(manager, {
                 name
             })
-            await this.queryRunner.manager.save(WordsBoxEntity, saveWordsBox)
-
+            if (wordsBox) {
+                throw new CustomError(WORDS_BOX_ALREADY_EXISTS)
+            }
+            /* ---------------------------- create words box ---------------------------- */
+            const createWordsBox = await this.createWordsBox({
+                name,
+                user
+            })
             await this.queryRunner.commitTransaction();
-            return Promise.resolve(saveWordsBox)
+
+            return Promise.resolve(createWordsBox)
         } catch (err) {
             await this.queryRunner.rollbackTransaction()
             throw err
         } finally {
             await this.queryRunner.release();
         }
+    }
+    async createWordsBox(wordsBox: Partial<WordsBoxEntity>) {
+        return await this.queryRunner.manager.save(WordsBoxEntity, wordsBox);
     }
 }

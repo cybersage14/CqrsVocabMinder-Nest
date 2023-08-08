@@ -35,10 +35,6 @@ export class WordsBoxController{
         @Param('boxId',new ParseUUIDPipe({version:'4'})) boxId: string,
         @CurrentUser() userId: string,
     ){
-        console.log("11",addWordToBoxRequestDto);
-        
-        console.log(boxId);
-        
         return this.commandBus.execute(new AddWordToBox(userId,boxId,addWordToBoxRequestDto));
     }
 }

@@ -14,7 +14,6 @@ export class GetWordsHandler implements IQueryHandler<GetWordsQuery> {
     async execute(query: GetWordsQuery): Promise<WordEntity | IPaginate<WordEntity> | WordEntity [] > {
         const { getWordsRequestDto, userId } = query
         const { filters, getAll, limit, page, search, sort, sortType } = getWordsRequestDto
-        console.log(userId);
 
         const queryBuilder = this.wordRepository.createQueryBuilder('word')
             .leftJoinAndSelect('word.user', 'user')

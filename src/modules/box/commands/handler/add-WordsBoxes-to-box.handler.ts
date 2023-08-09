@@ -21,13 +21,14 @@ export class AddWordsBoxesToBoxHandler implements ICommandHandler<AddWordsBoxesT
             /* -------------------------------------------------------------------------- */
             await this.queryRunner.connect();
             await this.queryRunner.startTransaction();
-
+            /* ------------------------------- get the box ------------------------------ */
             const getBox = await GetBox(this.queryRunner.manager, { id: boxId })
-            
             if (!getBox) {
                 throw new CustomError(BOX_NOT_FOUND)
             }
+            /* ------------------------------ get words box ----------------------------- */
             const wordsBoxes = await this.getWordsBoxes(WordBoxIds)
+            /* -------------------------------- save box -------------------------------- */
             const saveBox = await this.updateBox(getBox, { wordsBoxes })
 
             await this.queryRunner.commitTransaction();

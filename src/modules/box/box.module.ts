@@ -4,6 +4,7 @@ import { BoxController } from "./box.controller";
 import { CqrsModule } from "@nestjs/cqrs";
 import { BoxEntity } from "@src/entities";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { QueryHandler } from "./queries/query";
 
 @Module({
     imports: [
@@ -11,7 +12,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
         TypeOrmModule.forFeature([BoxEntity])
     ],
     controllers: [BoxController],
-    providers: [...CommandHandler],
+    providers: [...CommandHandler,...QueryHandler],
     exports: []
 })
 export class BoxModule { }

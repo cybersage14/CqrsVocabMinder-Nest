@@ -16,7 +16,7 @@ export class BoxEntity extends BaseModel {
   @ManyToOne(() => UserEntity, (user) => user.box, { cascade: true })
   user: UserEntity;
 
-  @ManyToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.Box,)
-  @JoinTable({ name: 'wordsBox' })
+  @ManyToMany(() => WordsBoxEntity, (wordsBox) => wordsBox.Box)
+  @JoinTable({ name: 'box_words' })
   wordsBoxes: WordsBoxEntity[];
 }

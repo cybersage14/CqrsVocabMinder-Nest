@@ -26,6 +26,11 @@ export const WORDS_BOX_NOT_FOUND : ICustomError = {
 }
 
 export const WORDS_BOX_ALREADY_EXISTS : ICustomError = {
-  description: "Word already exists",
-  status: HttpStatus.BAD_REQUEST,
+  description: "word already exists",
+  status: HttpStatus.CONFLICT,
+}
+
+export const BOX_ALREADY_EXISTS : ICustomError = {
+  description: "box already exists",
+  status: HttpStatus.CONFLICT,
 }

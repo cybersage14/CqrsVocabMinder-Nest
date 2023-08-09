@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { DataSource, QueryRunner } from "typeorm";
 import { WordsBoxEntity } from "@src/entities";
-import { CustomError, WORDS_BOX_ALREADY_EXISTS } from "@src/common/errors";
+import { CustomError, BOX_ALREADY_EXISTS } from "@src/common/errors";
 import { CreateWordsBoxCommand } from "../impl";
 import { GetUser } from "@src/modules/shared/functions";
 import { GetWordsBox } from "@src/modules/shared/functions/wordsBox.helper";
@@ -29,7 +29,7 @@ export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxComm
                 name
             })
             if (wordsBox) {
-                throw new CustomError(WORDS_BOX_ALREADY_EXISTS)
+                throw new CustomError(BOX_ALREADY_EXISTS)
             }
             /* ---------------------------- create words box ---------------------------- */
             const createWordsBox = await this.createWordsBox({

@@ -3,6 +3,6 @@ import { IsArray, IsString, IsUUID } from "class-validator";
 
 export class AddWordToBoxRequestDto {
     @ApiProperty({ isArray: true})
-    @IsArray()
+    @IsArray({always: true,})
     ids: string [];
 }

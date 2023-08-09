@@ -34,3 +34,8 @@ export const BOX_ALREADY_EXISTS : ICustomError = {
   description: "box already exists",
   status: HttpStatus.CONFLICT,
 }
+
+export const BOX_NOT_FOUND : ICustomError = {
+  description: "box not found",
+  status: HttpStatus.NOT_FOUND,
+}

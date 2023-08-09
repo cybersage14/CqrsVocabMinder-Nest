@@ -7,6 +7,7 @@ import { AddWordsBoxesToBoxRequestDto, CreateBoxRequestDto, GetBoxesRequestDto }
 import { CurrentUser } from "@src/common/decorator/current-user.decorator";
 import { AddWordsBoxesToBoxCommand } from "./commands/impl/add-wordsBoxes-to-box.command";
 import { GetBoxesCommand } from "./queries/impl";
+import { getBoxCommand } from "./queries/impl/get-box.command";
 
 @ApiTags('box')
 @Controller("box")
@@ -47,5 +48,16 @@ export class BoxController {
         @Query() getBoxesRequestDto: GetBoxesRequestDto
     ) {
         return await this.queryBus.execute(new GetBoxesCommand(userId, getBoxesRequestDto))
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @ApiProperty({})
+    @Get('/:boxId')
+    async getBox(
+        @CurrentUser() userId: string,
+        @Param("boxId", new ParseUUIDPipe({ version: '4' })) boxId: string,
+    ) {
+        return await this.queryBus.execute(new getBoxCommand(userId,boxId ))
     }
 }

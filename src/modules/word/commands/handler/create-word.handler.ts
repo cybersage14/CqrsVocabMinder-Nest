@@ -39,7 +39,6 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
             await this.queryRunner.commitTransaction();
             return Promise.resolve(createWord);
         } catch (err) {
-            console.log(err);
             await this.queryRunner.rollbackTransaction()
             throw err
         } finally {

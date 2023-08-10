@@ -3,6 +3,7 @@ import { DeleteWordCommand } from "../impl";
 import { DataSource, QueryRunner } from "typeorm";
 import { GetWord } from "@src/modules/shared/functions/word.helper";
 import { CustomError, WORD_NOT_FOUND } from "@src/common/errors";
+import { GetUser } from "@src/modules/shared/functions";
 
 @CommandHandler(DeleteWordCommand)
 export class DeleteWordHandler implements ICommandHandler<DeleteWordCommand> {
@@ -19,11 +20,12 @@ export class DeleteWordHandler implements ICommandHandler<DeleteWordCommand> {
             /* -------------------------------------------------------------------------- */
             await this.queryRunner.connect()
             await this.queryRunner.startTransaction()
+            const user = await GetUser(this.queryRunner.manager,{id:userId})
             /* -------------------------------- get word -------------------------------- */
             const word = await GetWord(this.queryRunner.manager, {
                 id: wordId,
                 user: {
-                    id: userId
+                    id: user.id
                 }
             })
             if (!word) {

@@ -3,13 +3,14 @@ import { QueryRunner, DataSource } from "typeorm";
 import { GetWord } from "@src/modules/shared/functions/word.helper";
 import { UpdateWordCommand } from "../impl";
 import { WordEntity } from "@src/entities";
+import { GetUser } from "@src/modules/shared/functions";
 
 @CommandHandler(UpdateWordCommand)
 export class UpdateWord implements ICommandHandler<UpdateWordCommand> {
     queryRunner: QueryRunner;
     constructor(private dataSource: DataSource) { }
     async execute(command: UpdateWordCommand): Promise<WordEntity> {
-        const { updateWordRequestDto, wordId } = command
+        const { updateWordRequestDto, wordId, userId } = command
         const { definition, usage, pronounce, example, word } = updateWordRequestDto
         this.queryRunner = this.dataSource.createQueryRunner();
         try {
@@ -19,8 +20,14 @@ export class UpdateWord implements ICommandHandler<UpdateWordCommand> {
             await this.queryRunner.connect();
             await this.queryRunner.startTransaction();
             const manager = this.queryRunner.manager;
+            const user = await GetUser(manager, { id: userId })
             /* -------------------------------- get word -------------------------------- */
-            const getWord = await GetWord(manager, { id: wordId })
+            const getWord = await GetWord(manager, {
+                id: wordId, 
+                user: {
+                    id: user.id
+                }
+            })
             /* ------------------------------- update word ------------------------------ */
             const updateWord = await this.updateWord(getWord, { definition, usage, pronounce, example, word })
 

@@ -45,7 +45,7 @@ export class WordController {
     @UseGuards(JwtAuthGuard)
     async getWord(
         @CurrentUser() userId: string,
-        @Param('wordId') wordId :string 
+        @Param('wordId') wordId: string
     ) {
         return await this.queryBus.execute(new GetWordQuery(userId, wordId));
     }
@@ -56,9 +56,10 @@ export class WordController {
     @UseGuards(JwtAuthGuard)
     async updateWord(
         @Body() updateWordRequestDto: UpdateWordRequestDto,
-        @Param('wordId', new ParseUUIDPipe({ version: '4' })) wordId: string
+        @Param('wordId', new ParseUUIDPipe({ version: '4' })) wordId: string,
+        @CurrentUser() userId: string
     ) {
-        return await this.commandBus.execute(new UpdateWordCommand(wordId,updateWordRequestDto))
+        return await this.commandBus.execute(new UpdateWordCommand(wordId, userId, updateWordRequestDto))
     }
 
     @Delete("/:wordId")
@@ -66,9 +67,9 @@ export class WordController {
     @ApiProperty({})
     @UseGuards(JwtAuthGuard)
     async deleteWord(
-        @CurrentUser() userId :string,
+        @CurrentUser() userId: string,
         @Param('wordId', new ParseUUIDPipe({ version: '4' })) wordId: string
     ) {
-        return await this.commandBus.execute(new DeleteWordCommand(userId,wordId))
+        return await this.commandBus.execute(new DeleteWordCommand(userId, wordId))
     }
 }

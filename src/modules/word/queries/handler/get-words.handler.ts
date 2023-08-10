@@ -1,10 +1,10 @@
 import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
 import { WordEntity } from "../../../../entities";
-import { GetWordsQuery } from "../impl";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { paginate } from "../../../../common/helper/paginate";
 import { IPaginate } from "../../../../common/interfaces/paginate";
+import { GetWordsQuery } from "../impl";
 
 @QueryHandler(GetWordsQuery)
 export class GetWordsHandler implements IQueryHandler<GetWordsQuery> {

@@ -39,3 +39,7 @@ export const BOX_NOT_FOUND : ICustomError = {
   description: "box not found",
   status: HttpStatus.NOT_FOUND,
 }
+export const WORD_NOT_FOUND : ICustomError = {
+  description: "word not found",
+  status: HttpStatus.NOT_FOUND,
+}

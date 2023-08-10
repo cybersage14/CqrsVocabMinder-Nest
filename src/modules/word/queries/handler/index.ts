@@ -1,4 +1,5 @@
-export * from "./get-wors.handler";
-import { GetWordsHandler } from "./get-wors.handler";
+export * from "./get-words.handler";
+import { GetWordHandler } from "./get-word.handler";
+import { GetWordsHandler } from "./get-words.handler";
 
-export const QueryHandler = [GetWordsHandler]
+export const QueryHandler = [GetWordsHandler,GetWordHandler]

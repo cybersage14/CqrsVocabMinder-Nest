@@ -24,11 +24,5 @@ import {
       name: 'updated_at',
     })
     public updatedAt: Date;
-  
-    @DeleteDateColumn({
-      type: 'timestamptz',
-      name: 'deleted_at',
-    })
-    public deletedAt: Date | null;
   }
   

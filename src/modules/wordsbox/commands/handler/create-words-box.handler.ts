@@ -26,7 +26,9 @@ export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxComm
             const user = await GetUser(manager, { id: userId })
             /* ------------------------------ get words box ----------------------------- */
             const wordsBox = await GetWordsBox(manager, {
-                name
+                name, user:{
+                    id:user.id
+                }
             })
             if (wordsBox) {
                 throw new CustomError(BOX_ALREADY_EXISTS)
@@ -36,6 +38,7 @@ export class CreateWordsBoxHandler implements ICommandHandler<CreateWordsBoxComm
                 name,
                 user
             })
+            
             await this.queryRunner.commitTransaction();
 
             return Promise.resolve(createWordsBox)

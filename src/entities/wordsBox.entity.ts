@@ -2,9 +2,6 @@ import {
     Entity,
     Column,
     ManyToOne,
-    ManyToMany,
-    Unique,
-    JoinTable,
     OneToMany,
     JoinColumn,
 } from 'typeorm';
@@ -17,11 +14,9 @@ import { BoxEntity } from './box.entity';
 @Entity({
     name: 'words_box'
 })
-@Unique('word_box_unique', ['name'])
 export class WordsBoxEntity extends BaseModel {
 
-    @Unique('word_box_unique', ['name'])
-    @Column({ name: 'name', type: 'varchar', unique: true, nullable: false })
+    @Column({ name: 'name', type: 'varchar', nullable: false })
     name: string;
 
     @Column({ default: false, name: 'is_learned' })

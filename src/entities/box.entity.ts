@@ -4,12 +4,10 @@ import { WordsBoxEntity } from './wordsBox.entity';
 import BaseModel from './base.model';
 
 @Entity({ name: 'box' })
-@Unique(['name', 'user'])
 export class BoxEntity extends BaseModel {
 
   @Column({ name: 'name', type: 'varchar',})
   name: string;
-
   /* -------------------------------------------------------------------------- */
   /*                                 Foreign key                                */
   /* -------------------------------------------------------------------------- */

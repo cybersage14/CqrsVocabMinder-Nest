@@ -9,7 +9,7 @@ export class UpdateWord implements ICommandHandler<UpdateWordCommand> {
     queryRunner: QueryRunner;
     constructor(private dataSource: DataSource) { }
     async execute(command: UpdateWordCommand): Promise<WordEntity> {
-        const { updateWordRequestDto, wordId: id } = command
+        const { updateWordRequestDto, wordId } = command
         const { definition, usage, pronounce, example, word } = updateWordRequestDto
         this.queryRunner = this.dataSource.createQueryRunner();
         try {
@@ -20,7 +20,7 @@ export class UpdateWord implements ICommandHandler<UpdateWordCommand> {
             await this.queryRunner.startTransaction();
             const manager = this.queryRunner.manager;
             /* -------------------------------- get word -------------------------------- */
-            const getWord = await GetWord(manager, { id })
+            const getWord = await GetWord(manager, { id: wordId })
             /* ------------------------------- update word ------------------------------ */
             const updateWord = await this.updateWord(getWord, { definition, usage, pronounce, example, word })
 

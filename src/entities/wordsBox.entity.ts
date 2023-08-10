@@ -36,13 +36,13 @@ export class WordsBoxEntity extends BaseModel {
 
     @OneToMany(() => WordEntity, (word) => word.wordsBoxes, { cascade: true })
     @JoinColumn({ name: 'wordsBoxesId' })
-    words: WordEntity [];
+    words: WordEntity[];
 
     @ManyToOne(() => UserEntity, (user) => user.wordsBoxes, { cascade: true })
     user: UserEntity;
 
-    @ManyToMany(() => BoxEntity, (box) => box.wordsBoxes, { cascade: true, })
-    Box: BoxEntity[]
+    @ManyToOne(() => BoxEntity, (box) => box.wordsBoxes, { cascade: true, })
+    Box: BoxEntity
 
     markWordAsLearned(): void {
         this.is_learned = true;

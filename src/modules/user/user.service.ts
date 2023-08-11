@@ -25,15 +25,13 @@ export class UsersService {
   }
 
   async createUser(registerRequestDto: RegisterRequestDto ) {
+    const {email,firstName,lastName,password} = registerRequestDto
     const user = await this.getUserByEmail(registerRequestDto.email);
-    console.log("user",user);
-    
     if (user) {
       throw new NotAcceptableException(
         'User with provided email already created.',
       );
     }
-
-    return await this.userRepository.save(registerRequestDto);
+    return  await this.userRepository.save({lastName,firstName,email,password});
   }
 }

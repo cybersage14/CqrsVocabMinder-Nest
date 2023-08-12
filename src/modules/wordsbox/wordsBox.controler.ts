@@ -6,7 +6,7 @@ import { ApiProperty, ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "@src/common/guard/jwt-guard";
 import { AddWordToBox } from "./commands/impl/add-word-to-box.command";
 import { CreateWordsBoxCommand, DeleteWordsBoxCommand, RemoveWordsCommand, UpdateWordsBoxCommand } from "./commands/impl";
-import { GetWordsBoxQuery } from "./queries/impl";
+import { GetWordsBoxQuery, getWordsBoxDetailQuery } from "./queries/impl";
 
 @ApiTags('words-box')
 @Controller('/words-box')
@@ -63,6 +63,7 @@ export class WordsBoxController {
     ) {
         return await this.commandBus.execute(new UpdateWordsBoxCommand(userId, boxId, updateWordsBoxRequestDto));
     }
+
     @ApiProperty({})
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
@@ -72,5 +73,16 @@ export class WordsBoxController {
         @Query() getWordsRequestDto: GetWordsRequestDto
     ) {
         return await this.queryBus.execute(new GetWordsBoxQuery(userId, getWordsRequestDto));
+    }
+
+    @ApiProperty({})
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @Get('/:boxId')
+    async getWordsBoxDetail(
+        @CurrentUser() userId: string,
+        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string
+        ) {
+        return await this.queryBus.execute(new getWordsBoxDetailQuery(userId, boxId));
     }
 }

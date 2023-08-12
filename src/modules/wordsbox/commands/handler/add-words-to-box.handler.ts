@@ -33,7 +33,7 @@ export class AddWordToBoxHandler implements ICommandHandler<AddWordToBox> {
             }
             /* ---------------------------- update words box ---------------------------- */
             const updateWordsBox = await this.updateWordsBox(wordBox, {
-                words: words,
+                words,
             })
             await this.queryRunner.commitTransaction();
             return Promise.resolve(updateWordsBox)

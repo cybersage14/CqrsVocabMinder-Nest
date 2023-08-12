@@ -11,7 +11,7 @@ export class WordsBoxHandler implements ICommandHandler<DeleteWordsBoxCommand> {
    constructor(private dataSource:DataSource){}
     async execute(command: DeleteWordsBoxCommand): Promise<any> {
         this.queryRunner = this.dataSource.createQueryRunner();
-        const {userId,wordsBoxId} = command
+        const {userId,boxId: wordsBoxId} = command
         try {
             /* -------------------------------------------------------------------------- */
             /*                              start transaction                             */

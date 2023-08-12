@@ -1,4 +1,3 @@
-import { CustomError, WORDS_BOX_NOT_FOUND } from "@src/common/errors";
 import { WordsBoxEntity } from "@src/entities";
 import { EntityManager, FindOptionsRelations, FindOptionsWhere } from "typeorm";
 

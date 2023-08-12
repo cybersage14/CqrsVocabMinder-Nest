@@ -1,5 +1,4 @@
-import { Get, Controller, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Get, Controller } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
@@ -8,8 +7,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  @UseGuards(AuthGuard())
+  @Get("/")
   root(): string {
     return this.appService.root();
   }

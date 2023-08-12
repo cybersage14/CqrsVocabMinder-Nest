@@ -16,7 +16,7 @@
       "test:watch": "jest --watch",
       "test:cov": "jest --coverage",
       "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-      "test:e2e": "jest --config ./test/jest-e2e.json",
+      "test:e2e": "NODE_ENV=tEsT jest --runInBand --detectOpenHandles --config ./test/jest-e2e.js",
       "webpack": "webpack --config webpack.config.js",
       "migration:create": "ts-node ./node_modules/typeorm/cli.js migration:create",
       "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d ormconfig.ts",

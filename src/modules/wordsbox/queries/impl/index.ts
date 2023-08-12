@@ -1,0 +1,1 @@
+export * from './get-words-box.command'

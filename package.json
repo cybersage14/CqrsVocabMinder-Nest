@@ -1,7 +1,7 @@
 {
-   "name": "nest-boilerplate",
+   "name": "nest-vocabMinder",
    "version": "1.0.0",
-   "description": "VivifyIdeas Nest Boilerplate",
+   "description": "",
    "author": "milad",
    "license": "MIT",
    "scripts": {
@@ -28,10 +28,7 @@
       "db:test:drop": "cross-env NODE_ENV=tEsT ts-node ./node_modules/typeorm/cli.js schema:drop -d ormconfig.ts",
       "seed:create": "ts-node ./node_modules/typeorm/cli.js migration:create",
       "seed:up": "ts-node ./node_modules/typeorm/cli.js migration:run -d ormconfig-seeder.ts",
-      "seed:down": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ormconfig-seeder.ts",
-      "add-migration": "ts-node ./node_modules/typeorm/cli.js migration:generate -d ormconfig.ts ",
-      "update-database": "ts-node ./node_modules/typeorm/cli.js migration:run",
-      "typeorm": "typeorm-ts-node-commonjs"
+      "seed:down": "ts-node ./node_modules/typeorm/cli.js migration:revert -d ormconfig-seeder.ts"
    },
    "dependencies": {
       "@nestjs/common": "^10.0.0",

@@ -1,6 +1,7 @@
 import { INestApplication } from "@nestjs/common";
 import { TestingModule, Test } from "@nestjs/testing";
 import { AppModule } from "@src/app.module";
+import { ROUTES } from "@src/common/routes/routes";
 import { UserEntity, WordEntity } from "@src/entities";
 import { CreateWordRequestDto } from "@src/modules/word/dto";
 import { createUser } from "@test/helper/createUser.helper";
@@ -8,8 +9,10 @@ import { options } from "ormconfig";
 import * as request from 'supertest';
 import { EntityManager, DataSource } from "typeorm";
 
+const URL = ROUTES.WORD.ROOT + ROUTES.WORD.CREATE_WORD.URL
+
 let dataSource: DataSource;
-describe("", () => {
+describe(ROUTES.WORD.CREATE_WORD.DESCRIPTION, () => {
   let app: INestApplication;
   let manager: EntityManager;
 
@@ -35,8 +38,8 @@ describe("", () => {
     await dataSource.destroy();
     await app.close();
   });
-  it("", async () => {
-    const { token, user } = await createUser(manager,{firstName:'test'});
+  it("should create word", async () => {
+    const { token, user } = await createUser(manager);
     createWordRequestDto = {
       definition: "test",
       example: "test",
@@ -44,13 +47,10 @@ describe("", () => {
       pronounce: "test",
       word: "test"
     }
-
     const response = await request(app.getHttpServer())
-      .post("/word")
+      .post(URL)
       .auth(token, { type: 'bearer' })
       .send(createWordRequestDto).expect(201)
-
-
     const getUser =await manager.findOne(UserEntity,{
       where:{
         id:user.id

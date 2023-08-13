@@ -14,7 +14,6 @@ export const createUser = async (manager: EntityManager, user: Partial<UserEntit
         signOptions: {
         expiresIn: process.env.JWT_EXPIRATION_TIME
       }});
-      console.log(process.env.JWT_SECRET_KEY);
     try {
         let getUser = await manager.findOne(UserEntity, { where: { email } })
         let userEntity

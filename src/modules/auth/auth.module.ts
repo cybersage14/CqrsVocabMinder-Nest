@@ -19,12 +19,8 @@ import { CommonModule } from '@src/common';
         return {
           secret: configService.get('JWT_SECRET_KEY'),
           signOptions: {
-            ...(configService.get('JWT_EXPIRATION_TIME')
-              ? {
-                  expiresIn: Number(configService.get('JWT_EXPIRATION_TIME')),
-                }
-              : {}),
-          },
+            expiresIn: Number(configService.get('JWT_EXPIRATION_TIME')),
+          }
         };
       },
       inject: [ConfigService],
@@ -35,4 +31,4 @@ import { CommonModule } from '@src/common';
   providers: [AuthService, JwtStrategy],
   exports: [PassportModule.register({ defaultStrategy: 'jwt' })],
 })
-export class AuthModule {}
+export class AuthModule { }

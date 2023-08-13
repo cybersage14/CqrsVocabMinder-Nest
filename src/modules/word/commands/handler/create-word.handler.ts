@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { CreateWordCommand } from "../impl";
 import { DataSource, QueryRunner } from "typeorm";
-import { WordEntity } from "@src/entities";
+import { UserEntity, WordEntity } from "@src/entities";
 import { GetUser } from "@src/modules/shared/functions";
 
 @CommandHandler(CreateWordCommand)
@@ -36,6 +36,7 @@ export class CreateWordHandler implements ICommandHandler<CreateWordCommand> {
                 word,
                 user
             })
+        
             await this.queryRunner.commitTransaction();
             return Promise.resolve(createWord);
         } catch (err) {

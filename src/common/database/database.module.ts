@@ -12,10 +12,10 @@ export const options: TypeOrmModuleOptions = {
   port: +process.env.DB_PORT || 5432,
   username: process.env.DB_USER || 'postgres',
   password: process.env.DB_PASSWORD || 'postgres',
-  database:'postgres',
-    // process.env.NODE_ENV === 'tEsT'
-    //   ? process.env.DB_NAME + '_test'
-    //   : process.env.DB_NAME || 'postgres',
+  database:
+    process.env.NODE_ENV === 'tEsT'
+      ? process.env.DB_NAME + '_test'
+      : process.env.DB_NAME || 'postgres',
   entities: entities,
   migrationsRun: true,
   synchronize: true,
@@ -29,4 +29,4 @@ function DatabaseOrmModule(): DynamicModule {
 @Module({
   imports: [DatabaseOrmModule()],
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

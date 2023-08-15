@@ -4,6 +4,7 @@ import { GetWord } from "@src/modules/shared/functions/word.helper";
 import { UpdateWordCommand } from "../impl";
 import { WordEntity } from "@src/entities";
 import { GetUser } from "@src/modules/shared/functions";
+import { CustomError, WORD_NOT_FOUND } from "@src/common/errors";
 
 @CommandHandler(UpdateWordCommand)
 export class UpdateWord implements ICommandHandler<UpdateWordCommand> {
@@ -28,6 +29,9 @@ export class UpdateWord implements ICommandHandler<UpdateWordCommand> {
                     id: user.id
                 }
             })
+            if(!getWord) {
+                throw new CustomError(WORD_NOT_FOUND)
+            }
             /* ------------------------------- update word ------------------------------ */
             const updateWord = await this.updateWord(getWord, { definition, usage, pronounce, example, word })
 

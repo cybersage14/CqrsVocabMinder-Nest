@@ -13,10 +13,10 @@ export class GetWordsHandler implements IQueryHandler<GetWordsQuery> {
     ) { }
     async execute(query: GetWordsQuery): Promise<WordEntity | IPaginate<WordEntity> | WordEntity [] > {
         const { getWordsRequestDto, userId } = query
-        const { filters, getAll, limit, page, search, sort, sortType } = getWordsRequestDto
+        const {  getAll, limit, page, search, sort, sortType } = getWordsRequestDto
 
         const queryBuilder = this.wordRepository.createQueryBuilder('word')
-            .leftJoinAndSelect('word.user', 'user')
+            .leftJoin('word.user', 'user')
             .andWhere('user.id = :userId', { userId })
 
         if (sort && sortType) {
@@ -32,7 +32,7 @@ export class GetWordsHandler implements IQueryHandler<GetWordsQuery> {
             return await queryBuilder.getMany()
         }
 
-        return paginate<WordEntity>(queryBuilder, limit, page);
+        return await paginate<WordEntity>(queryBuilder, limit, page);
     }
 
 }

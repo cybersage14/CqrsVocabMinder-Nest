@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { CreateWordCommand } from "../impl";
 import { DataSource, QueryRunner } from "typeorm";
-import { UserEntity, WordEntity } from "@src/entities";
+import { WordEntity } from "@src/entities";
 import { GetUser } from "@src/modules/shared/functions";
 
 @CommandHandler(CreateWordCommand)

@@ -33,6 +33,34 @@ export const ROUTES = {
     },
     WORDS_BOX: {
         ROOT: roots.wordsBox,
+        CREATE_WORDS_BOX:{
+            URL:'',
+            DESCRIPTION:'create words box'
+        },
+        ADD_WORDS_TO_BOX:{
+            URL:'/add-word-to-box/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'add words to box '
+        },
+        DELETE_WORDS_BOX:{
+            URL:'/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'delete words box by id'
+        },
+        UPDATE_WORDS_BOX:{
+            URL:'/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'update words box by id'
+        },
+        GET_ALL_WORDS_BOX:{
+            URL:'',
+            DESCRIPTION:'get all words box'
+        },
+        GET_WORDS_BOX:{
+            URL:"/:boxId",
+            PARAM:'boxId',
+            DESCRIPTION:'get words box by id'
+        }
     },
     BOX: {
         ROOT: roots.box,

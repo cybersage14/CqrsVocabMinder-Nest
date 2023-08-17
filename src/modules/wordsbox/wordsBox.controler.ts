@@ -7,19 +7,22 @@ import { JwtAuthGuard } from "@src/common/guard/jwt-guard";
 import { AddWordToBox } from "./commands/impl/add-word-to-box.command";
 import { CreateWordsBoxCommand, DeleteWordsBoxCommand, RemoveWordsCommand, UpdateWordsBoxCommand } from "./commands/impl";
 import { GetWordsBoxQuery, getWordsBoxDetailQuery } from "./queries/impl";
+import { ROUTES } from "@src/common/routes/routes";
 
-@ApiTags('words-box')
-@Controller('/words-box')
+@ApiTags(ROUTES.WORDS_BOX.ROOT)
+@Controller(ROUTES.WORDS_BOX.ROOT)
 export class WordsBoxController {
     constructor(
         private readonly commandBus: CommandBus,
         private readonly queryBus: QueryBus
     ) { }
 
-    @ApiProperty({})
+    @Post(ROUTES.WORDS_BOX.CREATE_WORDS_BOX.URL)
+    @ApiProperty({
+        description:ROUTES.WORDS_BOX.CREATE_WORDS_BOX.DESCRIPTION
+    })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @Post()
     createWordsBox(
         @Body() createWordRequestDto: CreateWordsBoxRequestDto,
         @CurrentUser() userId: string
@@ -27,47 +30,55 @@ export class WordsBoxController {
         return this.commandBus.execute(new CreateWordsBoxCommand(userId, createWordRequestDto));
     }
 
-    @ApiProperty({})
+    @Post(ROUTES.WORDS_BOX.ADD_WORDS_TO_BOX.URL)
+    @ApiProperty({
+        description:ROUTES.WORDS_BOX.ADD_WORDS_TO_BOX.DESCRIPTION
+    })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @Post('/add-word-to-box/:boxId')
     addWordToBox(
         @Body() addWordToBoxRequestDto: AddWordToBoxRequestDto,
-        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @Param(ROUTES.WORDS_BOX.ADD_WORDS_TO_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string,
         @CurrentUser() userId: string,
     ) {
         return this.commandBus.execute(new AddWordToBox(userId, boxId, addWordToBoxRequestDto));
     }
 
-    @ApiProperty({})
+    @Delete(ROUTES.WORDS_BOX.DELETE_WORDS_BOX.URL)
+    @ApiProperty({
+        description:ROUTES.WORDS_BOX.DELETE_WORDS_BOX.DESCRIPTION
+    })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @Delete('/:boxId')
     async deleteWordsBox(
-        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @Param(ROUTES.WORDS_BOX.DELETE_WORDS_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string,
         @Body() removeWordsRequestDto: RemoveWordsRequestDto,
         @CurrentUser() userId: string,
     ) {
-        return await this.commandBus.execute(new RemoveWordsCommand(userId, boxId, removeWordsRequestDto));
+        return await this.commandBus.execute(new DeleteWordsBoxCommand(userId, boxId, removeWordsRequestDto));
     }
 
 
-    @ApiProperty({})
+    @ApiProperty({
+        description:ROUTES.WORDS_BOX.UPDATE_WORDS_BOX.DESCRIPTION
+    })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @Put('/:boxId')
+    @Put(ROUTES.WORDS_BOX.UPDATE_WORDS_BOX.URL)
     async updateWordsBox(
-        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @Param(ROUTES.WORDS_BOX.UPDATE_WORDS_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string,
         @CurrentUser() userId: string,
         @Body() updateWordsBoxRequestDto: UpdateWordsBoxRequestDto
     ) {
         return await this.commandBus.execute(new UpdateWordsBoxCommand(userId, boxId, updateWordsBoxRequestDto));
     }
 
-    @ApiProperty({})
+    @Get(ROUTES.WORDS_BOX.GET_ALL_WORDS_BOX.URL)
+    @ApiProperty({
+        description:ROUTES.WORDS_BOX.GET_ALL_WORDS_BOX.DESCRIPTION
+    })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @Get()
     async getWordsBox(
         @CurrentUser() userId: string,
         @Query() getWordsRequestDto: GetWordsRequestDto
@@ -75,13 +86,15 @@ export class WordsBoxController {
         return await this.queryBus.execute(new GetWordsBoxQuery(userId, getWordsRequestDto));
     }
 
-    @ApiProperty({})
+    @ApiProperty({
+        description:ROUTES.WORDS_BOX.GET_WORDS_BOX.DESCRIPTION
+    })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @Get('/:boxId')
+    @Get(ROUTES.WORDS_BOX.GET_WORDS_BOX.URL)
     async getWordsBoxDetail(
         @CurrentUser() userId: string,
-        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string
+        @Param(ROUTES.WORDS_BOX.GET_WORDS_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string
         ) {
         return await this.queryBus.execute(new getWordsBoxDetailQuery(userId, boxId));
     }

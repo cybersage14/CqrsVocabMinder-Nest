@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { WordEntity, WordsBoxEntity } from "@src/entities";
+import {  WordsBoxEntity } from "@src/entities";
 import { EntityManager } from "typeorm";
 
 export const createWordsBox = async (manager: EntityManager, {
@@ -18,5 +18,5 @@ export const createWordsBox = async (manager: EntityManager, {
         name: name ? name : faker.lorem.word(),
         user,
     })
-    return await manager.save(WordEntity, wordEntity)
+    return await manager.save(WordsBoxEntity, wordEntity)
 };

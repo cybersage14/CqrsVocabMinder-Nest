@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { ApiBearerAuth, ApiProperty, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiProperty, ApiTags } from "@nestjs/swagger";
 import { CreateWordRequestDto } from "./dto/create-word.request.dto";
 import { CreateWordCommand, DeleteWordCommand, UpdateWordCommand } from "./commands/impl";
 import { CurrentUser } from "../../common/decorator/current-user.decorator";
@@ -21,7 +21,7 @@ export class WordController {
     @Post(ROUTES.WORD.CREATE_WORD.URL)
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @ApiProperty({
+    @ApiOperation({
         description: ROUTES.WORD.CREATE_WORD.DESCRIPTION
     })
     async createWord(
@@ -32,7 +32,7 @@ export class WordController {
     }
 
     @Get(ROUTES.WORD.GET_WORDS.URL)
-    @ApiProperty({
+    @ApiOperation({
         description: ROUTES.WORD.GET_WORDS.DESCRIPTION
     })
     @ApiBearerAuth()
@@ -46,7 +46,7 @@ export class WordController {
 
     @Get(ROUTES.WORD.GET_WORD_BY_ID.URL)
     @ApiBearerAuth()
-    @ApiProperty({
+    @ApiOperation({
         description: ROUTES.WORD.GET_WORD_BY_ID.DESCRIPTION
     })
     @UseGuards(JwtAuthGuard)
@@ -58,7 +58,7 @@ export class WordController {
     }
 
     @Put(ROUTES.WORD.UPDATE_WORD_BY_ID.URL)
-    @ApiProperty({
+    @ApiOperation({
         description: ROUTES.WORD.GET_WORD_BY_ID.DESCRIPTION
     })
     @ApiBearerAuth()
@@ -73,7 +73,7 @@ export class WordController {
 
     @Delete(ROUTES.WORD.DELETE_WORD_BY_ID.URL)
     @ApiBearerAuth()
-    @ApiProperty({
+    @ApiOperation({
         description: ROUTES.WORD.DELETE_WORD_BY_ID.DESCRIPTION
     })
     @UseGuards(JwtAuthGuard)

@@ -6,7 +6,7 @@ import { GetUser } from "@src/modules/shared/functions";
 import { CustomError, WORDS_BOX_NOT_FOUND } from "@src/common/errors";
 
 @CommandHandler(DeleteWordsBoxCommand)
-export class WordsBoxHandler implements ICommandHandler<DeleteWordsBoxCommand> {
+export class DeleteWordsBoxHandler implements ICommandHandler<DeleteWordsBoxCommand> {
     queryRunner: QueryRunner;
    constructor(private dataSource:DataSource){}
     async execute(command: DeleteWordsBoxCommand): Promise<any> {

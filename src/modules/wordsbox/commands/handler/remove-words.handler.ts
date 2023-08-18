@@ -3,7 +3,7 @@ import { RemoveWordsCommand } from "../impl";
 import { DataSource, QueryRunner } from "typeorm";
 import { GetUser } from "@src/modules/shared/functions";
 import { WordEntity, WordsBoxEntity } from "@src/entities";
-import { CustomError, WORDS_BOX_NOT_FOUND, WORD_NOT_FOUND } from "@src/common/errors";
+import { CustomError, WORDS_BOX_NOT_FOUND, WORD_NOT_FOUND, WORD_NOT_YOUR_BOX } from "@src/common/errors";
 import { GetWord } from "@src/modules/shared/functions/word.helper";
 import { GetWordsBox } from "@src/modules/shared/functions/wordsBox.helper";
 
@@ -25,10 +25,7 @@ export class RemoveWordsHandler implements ICommandHandler<RemoveWordsCommand> {
             /* -------------------------------- find user ------------------------------- */
             const user = await GetUser(manager, { id: userId })
             /* ------------------------------- get words ------------------------------- */
-            const words = await this.getWords(wordsIds, user.id)
-            if (!words) {
-                throw new CustomError(WORD_NOT_FOUND)
-            }
+            await this.getWords(wordsIds, user.id)
             /* ------------------------------ get words box ----------------------------- */
             const wordsBox = await GetWordsBox(manager, { id: boxId }, { words: true })
             if (!wordsBox) {
@@ -36,6 +33,9 @@ export class RemoveWordsHandler implements ICommandHandler<RemoveWordsCommand> {
             }
             /* --------------------  Filter out the words to remove ------------------- */
             const wordsToRemove = wordsBox.words.filter(word => wordsIds.includes(word.id));
+            if(wordsToRemove.length === 0){
+                throw new CustomError(WORD_NOT_YOUR_BOX)
+            }
             /* ---------------------------- update words box ---------------------------- */
             const removeWords = await this.removeWords(wordsBox, wordsToRemove);
             

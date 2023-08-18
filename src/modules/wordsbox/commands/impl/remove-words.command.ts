@@ -5,6 +5,6 @@ export class RemoveWordsCommand implements ICommand {
     constructor(
         public readonly userId: string,
         public readonly boxId: string,
-        public readonly removeWordsRequestDto:RemoveWordsRequestDto
-        ) { }
-}
+        public readonly removeWordsRequestDto: RemoveWordsRequestDto
+    ) { }
+} 

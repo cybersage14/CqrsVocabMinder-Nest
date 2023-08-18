@@ -52,6 +52,11 @@ export const ROUTES = {
             PARAM:'boxId',
             DESCRIPTION:'update words box by id'
         },
+        REMOVE_WORD_FROM_WORDS_BOX:{
+            URL:'/remove-word-from-box/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'remove words by box id'
+        },
         GET_ALL_WORDS_BOX:{
             URL:'',
             DESCRIPTION:'get all words box'

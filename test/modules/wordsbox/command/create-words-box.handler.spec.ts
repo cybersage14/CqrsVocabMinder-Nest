@@ -3,7 +3,7 @@ import { TestingModule, Test } from "@nestjs/testing";
 import { AppModule } from "@src/app.module";
 import { BOX_ALREADY_EXISTS } from "@src/common/errors";
 import { ROUTES } from "@src/common/routes/routes";
-import { UserEntity, WordsBoxEntity, } from "@src/entities";
+import { UserEntity, } from "@src/entities";
 import { CreateWordsBoxRequestDto } from "@src/modules/wordsbox/dto";
 import { createUser } from "@test/helper";
 import { createWordsBox } from "@test/helper/createWordsBox.helper";

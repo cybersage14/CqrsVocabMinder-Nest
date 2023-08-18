@@ -33,7 +33,7 @@ export class WordsBoxHandler implements ICommandHandler<DeleteWordsBoxCommand> {
             await this.queryRunner.commitTransaction()
             return {
                 is_deleted:true,
-                wordsBoxId
+                id:wordsBoxId
             }            
         } catch (err) {
             await this.queryRunner.rollbackTransaction()

@@ -30,15 +30,15 @@ export class WordsBoxController {
         return this.commandBus.execute(new CreateWordsBoxCommand(userId, createWordRequestDto));
     }
 
-    @Post(ROUTES.WORDS_BOX.ADD_WORDS_TO_BOX.URL)
+    @Put(ROUTES.WORDS_BOX.UPDATE_ADD_WORDS_TO_BOX.URL)
     @ApiProperty({
-        description:ROUTES.WORDS_BOX.ADD_WORDS_TO_BOX.DESCRIPTION
+        description:ROUTES.WORDS_BOX.UPDATE_ADD_WORDS_TO_BOX.DESCRIPTION
     })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     addWordToBox(
         @Body() addWordToBoxRequestDto: AddWordToBoxRequestDto,
-        @Param(ROUTES.WORDS_BOX.ADD_WORDS_TO_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @Param(ROUTES.WORDS_BOX.UPDATE_ADD_WORDS_TO_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string,
         @CurrentUser() userId: string,
     ) {
         return this.commandBus.execute(new AddWordToBox(userId, boxId, addWordToBoxRequestDto));

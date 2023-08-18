@@ -37,7 +37,7 @@ export const ROUTES = {
             URL:'',
             DESCRIPTION:'create words box'
         },
-        ADD_WORDS_TO_BOX:{
+        UPDATE_ADD_WORDS_TO_BOX:{
             URL:'/add-word-to-box/:boxId',
             PARAM:'boxId',
             DESCRIPTION:'add words to box '

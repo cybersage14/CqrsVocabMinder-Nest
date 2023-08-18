@@ -1,12 +1,12 @@
 import * as bcrypt from 'bcrypt';
 
 export class Hash {
-  static async make(plainText) {
-    const salt = await bcrypt.genSalt();
-    return await bcrypt.hash(plainText, salt);
+  static  make(plainText) {
+    const salt = bcrypt.genSaltSync();
+    return bcrypt.hashSync(plainText, salt);
   }
 
-  static async compare(plainText, hash) {
-    return await bcrypt.compare(plainText, hash);
+  static compare(plainText, hash) {
+    return  bcrypt.compareSync(plainText, hash);
   }
 }

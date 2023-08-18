@@ -99,15 +99,15 @@ export class WordsBoxController {
         return await this.queryBus.execute(new GetWordsBoxQuery(userId, getWordsRequestDto));
     }
 
-    @Get(ROUTES.WORDS_BOX.GET_WORDS_BOX.URL)
+    @Get(ROUTES.WORDS_BOX.GET_WORDS_BOX_DETAIL.URL)
     @ApiOperation({
-        description:ROUTES.WORDS_BOX.GET_WORDS_BOX.DESCRIPTION
+        description:ROUTES.WORDS_BOX.GET_WORDS_BOX_DETAIL.DESCRIPTION
     })
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     async getWordsBoxDetail(
         @CurrentUser() userId: string,
-        @Param(ROUTES.WORDS_BOX.GET_WORDS_BOX.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string
+        @Param(ROUTES.WORDS_BOX.GET_WORDS_BOX_DETAIL.PARAM, new ParseUUIDPipe({ version: '4' })) boxId: string
         ) {
         return await this.queryBus.execute(new getWordsBoxDetailQuery(userId, boxId));
     }

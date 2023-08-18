@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { ApiBearerAuth, ApiProperty, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "@src/common/guard/jwt-guard";
@@ -31,12 +31,13 @@ export class BoxController {
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
     @ApiProperty({})
-    @Post("/:boxId")
+    @Put("/:boxId")
     async addWordsBoxesToBox(
         @Body() addWordsBoxesToBoxRequestDto: AddWordsBoxesToBoxRequestDto,
-        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string
+        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @CurrentUser() userId :string
     ) {
-        return await this.commandBus.execute(new AddWordsBoxesToBoxCommand(boxId, addWordsBoxesToBoxRequestDto));
+        return await this.commandBus.execute(new AddWordsBoxesToBoxCommand(boxId,userId,addWordsBoxesToBoxRequestDto));
     }
 
     @UseGuards(JwtAuthGuard)

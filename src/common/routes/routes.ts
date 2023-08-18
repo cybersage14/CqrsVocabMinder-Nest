@@ -61,7 +61,7 @@ export const ROUTES = {
             URL:'',
             DESCRIPTION:'get all words box'
         },
-        GET_WORDS_BOX:{
+        GET_WORDS_BOX_DETAIL:{
             URL:"/:boxId",
             PARAM:'boxId',
             DESCRIPTION:'get words box by id'

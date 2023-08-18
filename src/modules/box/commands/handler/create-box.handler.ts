@@ -23,21 +23,19 @@ export class CreateBoxHandler implements ICommandHandler<CreateBoxCommand> {
             await this.queryRunner.connect();
             await this.queryRunner.startTransaction();
             const manager = this.queryRunner.manager;
-
-            /* -------------------------------------------------------------------------- */
-            /*                                  get user                                  */
-            /* -------------------------------------------------------------------------- */
+            /* -------------------------------- get user -------------------------------- */
             const user = await GetUser(manager, { id: userId })
             /* --------------------------------- get box -------------------------------- */
             const getBox = await GetBox(manager, {
-                name, user: {
+                name,
+                user: {
                     id: userId
                 }
             })
             if (getBox) {
                 throw new CustomError(BOX_ALREADY_EXISTS)
             }
-            
+             /* ------------------------------- create box ------------------------------- */
             const box = await this.queryRunner.manager.save(BoxEntity, {
                 name,
                 user

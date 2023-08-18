@@ -17,7 +17,7 @@ export class GetWordsBoxHandler implements IQueryHandler<GetWordsBoxQuery> {
         const { getAll, sortType, sort, page, limit, search, } = getWordsRequestDto
 
         const queryBuilder = this.wordsBoxRepository.createQueryBuilder('wordsBox')
-            .leftJoinAndSelect('wordsBox.user', 'user').andWhere('user.id = :userId', { userId })
+            .leftJoin('wordsBox.user', 'user').andWhere('user.id = :userId', { userId })
 
         if (sort && sortType) {
             queryBuilder.orderBy(sort, sortType);

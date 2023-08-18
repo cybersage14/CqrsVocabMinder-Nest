@@ -6,7 +6,7 @@ import { WORDS_BOX_NOT_FOUND, WORD_NOT_FOUND } from "@src/common/errors";
 import { ROUTES } from "@src/common/routes/routes";
 import { URL_REPLACE_PARAMS } from "@src/common/utils";
 import { UserEntity, } from "@src/entities";
-import { AddWordToBoxRequestDto } from "@src/modules/wordsbox/dto";
+import { AddWordToBoxRequestDto } from "@src/modules/wordsBox/dto";
 import { createUser, createWord } from "@test/helper";
 import { createWordsBox } from "@test/helper/createWordsBox.helper";
 import { options } from "ormconfig";

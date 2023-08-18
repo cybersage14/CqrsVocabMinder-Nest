@@ -4,7 +4,7 @@ import { AppModule } from "@src/app.module";
 import { BOX_ALREADY_EXISTS } from "@src/common/errors";
 import { ROUTES } from "@src/common/routes/routes";
 import { UserEntity, } from "@src/entities";
-import { CreateWordsBoxRequestDto } from "@src/modules/wordsbox/dto";
+import { CreateWordsBoxRequestDto } from "@src/modules/wordsBox/dto";
 import { createUser } from "@test/helper";
 import { createWordsBox } from "@test/helper/createWordsBox.helper";
 import { options } from "ormconfig";

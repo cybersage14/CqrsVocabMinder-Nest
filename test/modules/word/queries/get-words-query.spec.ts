@@ -4,7 +4,7 @@ import { AppModule } from "@src/app.module";
 import { IPaginate } from "@src/common/interfaces/paginate";
 import { ROUTES } from "@src/common/routes/routes";
 import { WordEntity } from "@src/entities";
-import { GetWordsRequestDto } from "@src/modules/wordsbox/dto";
+import { GetWordsRequestDto } from "@src/modules/wordsBox/dto";
 import { createUser, createWord } from "@test/helper";
 import { options } from "ormconfig";
 import * as request from 'supertest';

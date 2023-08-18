@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { ApiBearerAuth, ApiProperty, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiProperty, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "@src/common/guard/jwt-guard";
-import { CreateBoxCommand } from "./commands/impl";
-import { AddWordsBoxesToBoxRequestDto, CreateBoxRequestDto, GetBoxesRequestDto } from "./dto";
+import { CreateBoxCommand, DeleteBoxCommand, RemoveWordsBoxFromBoxCommand } from "./commands/impl";
+import { AddWordsBoxesToBoxRequestDto, CreateBoxRequestDto, GetBoxesRequestDto, RemoveWordsBoxFromBoxRequestDto } from "./dto";
 import { CurrentUser } from "@src/common/decorator/current-user.decorator";
 import { AddWordsBoxesToBoxCommand } from "./commands/impl/add-wordsBoxes-to-box.command";
 import { GetBoxesCommand } from "./queries/impl";
@@ -19,7 +19,7 @@ export class BoxController {
 
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @ApiProperty({})
+    @ApiOperation({})
     @Post()
     async createBox(
         @CurrentUser() userId: string,
@@ -28,10 +28,10 @@ export class BoxController {
         return await this.commandBus.execute(new CreateBoxCommand(userId, createBoxRequestDto));
     }
 
+    @Put("/add-wordsBox-to-box/:boxId")
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @ApiProperty({})
-    @Put("/:boxId")
+    @ApiOperation({})
     async addWordsBoxesToBox(
         @Body() addWordsBoxesToBoxRequestDto: AddWordsBoxesToBoxRequestDto,
         @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
@@ -40,9 +40,32 @@ export class BoxController {
         return await this.commandBus.execute(new AddWordsBoxesToBoxCommand(boxId,userId,addWordsBoxesToBoxRequestDto));
     }
 
+    @Delete("/:boxId")
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @ApiProperty({})
+    @ApiOperation({})
+    async deleteBox(
+        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @CurrentUser() userId :string
+    ) {
+        return await this.commandBus.execute(new DeleteBoxCommand(userId,boxId));
+    }
+
+    @Put("/remove-wordsBox-from-box/:boxId")
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @ApiOperation({})
+    async removeWordsBoxFromBox(
+        @Param('boxId', new ParseUUIDPipe({ version: '4' })) boxId: string,
+        @CurrentUser() userId :string,
+        @Body() removeWordsBoxFromBoxRequestDto: RemoveWordsBoxFromBoxRequestDto
+    ) {
+        return await this.commandBus.execute(new RemoveWordsBoxFromBoxCommand(boxId,userId,removeWordsBoxFromBoxRequestDto));
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @ApiBearerAuth()
+    @ApiOperation({})
     @Get()
     async getBoxes(
         @CurrentUser() userId: string,
@@ -53,7 +76,7 @@ export class BoxController {
 
     @UseGuards(JwtAuthGuard)
     @ApiBearerAuth()
-    @ApiProperty({})
+    @ApiOperation({})
     @Get('/:boxId')
     async getBoxDetail(
         @CurrentUser() userId: string,

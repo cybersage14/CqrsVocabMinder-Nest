@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
 import { RemoveWordsBoxFromBoxCommand } from "../impl";
-import { CustomError, BOX_NOT_FOUND, WORDS_BOX_NOT_IN_YOUR_BOX } from "@src/common/errors";
+import { CustomError, BOX_NOT_FOUND, WORDS_BOX_NOT_IN_YOUR_BOX, WORDS_BOX_NOT_FOUND } from "@src/common/errors";
 import { GetUser } from "@src/modules/shared/functions";
 import { GetBox } from "@src/modules/shared/functions/box.handler";
 import { QueryRunner, DataSource } from "typeorm";
@@ -71,7 +71,7 @@ export class RemoveWordsBoxFromBoxHandler implements ICommandHandler<RemoveWords
                 }
             })
             if (!getWordsBox) {
-                throw new CustomError(BOX_NOT_FOUND)
+                throw new CustomError(WORDS_BOX_NOT_FOUND)
             }
             wordsBoxes.push(getWordsBox)
         }

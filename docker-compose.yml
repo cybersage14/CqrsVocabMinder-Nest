@@ -1,6 +1,8 @@
 version: "2"
 services:
   nest:
+    env_file:
+      - .env.example
     build: .
     container_name: nest-vocabMinder
     depends_on:
@@ -8,34 +10,23 @@ services:
     volumes:
       - ./src:/app/src
       - .env:/app/.env
-
-  # nginx:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-nginx
-  #   container_name: nest-nginx
-  #   depends_on:
-  #     - nest
-  #   environment:
-  #     - NGINX_SERVER_NAME=localhost
-  #     - NEST_HOST=nest
-  #     - NEST_PORT=3000
-  #     - NGINX_MAX_BODY=100M
-  #   ports:
-  #     - 80:80
-
+    ports:
+      - "3000:3000"
   db:
     image: postgres:latest
     container_name: nest-db
+    env_file:
+      - .env.example
+    restart: always
     environment:
-      MYSQL_DATABASE: nest
-      MYSQL_USER: nest
-      MYSQL_PASSWORD: nest
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: postgres, postgres_test,
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      DB_HOST: db
     ports:
-      - 3306:3306
+      - 5432:5432
     volumes:
-      - mariadbdata:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  mariadbdata:
+  pgdata:

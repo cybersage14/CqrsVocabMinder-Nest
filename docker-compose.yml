@@ -7,9 +7,6 @@ services:
     container_name: nest-vocabMinder
     depends_on:
       - db
-    volumes:
-      - ./src:/app/src
-      - .env:/app/.env
     ports:
       - "3000:3000"
   db:

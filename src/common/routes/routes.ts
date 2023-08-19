@@ -69,5 +69,38 @@ export const ROUTES = {
     },
     BOX: {
         ROOT: roots.box,
+        CREATE_BOX:{
+            URL:'',
+            DESCRIPTION:'create box'
+        },
+        UPDATE_BOX:{
+            URL:'/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'update box by id'
+        },
+        DELETE_BOX:{
+            URL:'/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'delete box by id'
+        },
+        ADD_WORDS_BOX_TO_BOX:{
+            URL:'/add-word-to-box/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'add words to box '
+        },
+        REMOVE_WORDS_BOX_FROM_BOX:{
+            URL:'/remove-word-from-box/:boxId',
+            PARAM:'boxId',
+            DESCRIPTION:'remove words by box id'
+        },
+        GET_ALL_BOX:{
+            URL:'',
+            DESCRIPTION:'get all box'
+        },
+        GET_BOX_DETAIL:{
+            URL:"/:boxId",
+            PARAM:'boxId',
+            DESCRIPTION:'get box by id'
+        },
     }
 } 

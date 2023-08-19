@@ -47,3 +47,7 @@ export const WORD_NOT_YOUR_BOX : ICustomError = {
   description: "this word is not your box",
   status: HttpStatus.NOT_FOUND,
 }
+export const WORDS_BOX_NOT_IN_YOUR_BOX : ICustomError = {
+  description: "this words box is not in your box",
+  status: HttpStatus.NOT_FOUND,
+}

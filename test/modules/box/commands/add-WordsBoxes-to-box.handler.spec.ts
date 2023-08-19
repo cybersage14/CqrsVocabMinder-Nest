@@ -2,11 +2,11 @@ import { faker } from "@faker-js/faker";
 import { INestApplication } from "@nestjs/common";
 import { TestingModule, Test } from "@nestjs/testing";
 import { AppModule } from "@src/app.module";
-import { BOX_ALREADY_EXISTS, BOX_NOT_FOUND, WORDS_BOX_NOT_FOUND } from "@src/common/errors";
+import { BOX_NOT_FOUND, WORDS_BOX_NOT_FOUND } from "@src/common/errors";
 import { ROUTES } from "@src/common/routes/routes";
 import { URL_REPLACE_PARAMS } from "@src/common/utils";
 import { UserEntity, } from "@src/entities";
-import { AddWordsBoxesToBoxRequestDto, CreateBoxRequestDto } from "@src/modules/box/dto";
+import { AddWordsBoxesToBoxRequestDto } from "@src/modules/box/dto";
 import { createUser } from "@test/helper";
 import { createBox } from "@test/helper/create-box.handler";
 import { createWordsBox } from "@test/helper/createWordsBox.helper";
@@ -88,7 +88,6 @@ describe(ROUTES.BOX.ADD_WORDS_BOX_TO_BOX.DESCRIPTION, () => {
             .put(URL_REPLACE_PARAMS(URL, { [ROUTES.BOX.ADD_WORDS_BOX_TO_BOX.PARAM]: faker.string.uuid() }))
             .auth(token, { type: 'bearer' })
             .send(addWordsBoxesToBoxRequestDto)
-        console.log(response.body);
         
         expect(response.body.message).toEqual(BOX_NOT_FOUND.description)
         expect(response.body.statusCode).toEqual(BOX_NOT_FOUND.status)
@@ -105,10 +104,8 @@ describe(ROUTES.BOX.ADD_WORDS_BOX_TO_BOX.DESCRIPTION, () => {
             .put(URL_REPLACE_PARAMS(URL, { [ROUTES.BOX.ADD_WORDS_BOX_TO_BOX.PARAM]: box.id }))
             .auth(token, { type: 'bearer' })
             .send(addWordsBoxesToBoxRequestDto)
-        console.log(response.body);
         
         expect(response.body.message).toEqual(WORDS_BOX_NOT_FOUND.description)
         expect(response.body.statusCode).toEqual(WORDS_BOX_NOT_FOUND.status)
-
     })
 });

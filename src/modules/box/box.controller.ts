@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
-import { ApiBearerAuth, ApiOperation, ApiProperty, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "@src/common/guard/jwt-guard";
 import { CreateBoxCommand, DeleteBoxCommand, RemoveWordsBoxFromBoxCommand, UpdateBoxCommand } from "./commands/impl";
 import { AddWordsBoxesToBoxRequestDto, CreateBoxRequestDto, GetBoxesRequestDto, RemoveWordsBoxFromBoxRequestDto, UpdateBoxRequestDto } from "./dto";

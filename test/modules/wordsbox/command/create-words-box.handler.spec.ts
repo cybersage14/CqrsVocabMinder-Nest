@@ -1,7 +1,7 @@
 import { INestApplication } from "@nestjs/common";
 import { TestingModule, Test } from "@nestjs/testing";
 import { AppModule } from "@src/app.module";
-import { BOX_ALREADY_EXISTS } from "@src/common/errors";
+import { BOX_ALREADY_EXISTS, WORDS_BOX_ALREADY_EXISTS } from "@src/common/errors";
 import { ROUTES } from "@src/common/routes/routes";
 import { UserEntity, } from "@src/entities";
 import { CreateWordsBoxRequestDto } from "@src/modules/wordsBox/dto";
@@ -66,21 +66,21 @@ describe(ROUTES.WORDS_BOX.CREATE_WORDS_BOX.DESCRIPTION, () => {
     expect(getUser.id).toEqual(response.body.user.id)
     expect(response.body.name).toEqual(createWordsBoxRequestDto.name)
   })
-  it('should throw error BOX_ALREADY_EXISTS', async () => {
+  it('should throw error WORDS_BOX_ALREADY_EXISTS', async () => {
     const { token, user } = await createUser(manager)
 
     createWordsBoxRequestDto = {
       name: "test"
     }
-    const wordsBox = await createWordsBox(manager, { name: createWordsBoxRequestDto.name, user,})
+    const wordsBox = await createWordsBox(manager, { name: createWordsBoxRequestDto.name, user, })
 
     const response = await request(app.getHttpServer())
       .post(URL)
       .auth(token, { type: 'bearer' })
       .send(createWordsBoxRequestDto).expect(409)
 
-    expect(response.body.statusCode).toEqual(BOX_ALREADY_EXISTS.status)
-    expect(response.body.message).toEqual(BOX_ALREADY_EXISTS.description)
+    expect(response.body.statusCode).toEqual(WORDS_BOX_ALREADY_EXISTS.status)
+    expect(response.body.message).toEqual(WORDS_BOX_ALREADY_EXISTS.description)
 
   })
 });

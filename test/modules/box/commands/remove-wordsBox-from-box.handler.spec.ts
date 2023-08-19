@@ -68,14 +68,9 @@ describe(ROUTES.BOX.REMOVE_WORDS_BOX_FROM_BOX.DESCRIPTION, () => {
                 wordsBoxes: true
             }
         })
-        console.log(getBox.wordsBoxes);
-
-        console.log(response.body);
 
         expect(response.body.wordsBoxes).toEqual(getBox.wordsBoxes)
         expect(response.body.id).toEqual(box.id)
-
-
     })
     it('should throw error BOX_NOT_FOUND', async () => {
         const { token, user } = await createUser(manager)

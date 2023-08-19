@@ -43,7 +43,7 @@ describe(ROUTES.WORDS_BOX.UPDATE_ADD_WORDS_TO_BOX.DESCRIPTION, () => {
         await app.close();
     });
 
-    it("should create words box", async () => {
+    it("should add words to box", async () => {
         const { token, user } = await createUser(manager)
 
         const wordsBox = await createWordsBox(manager, { user })

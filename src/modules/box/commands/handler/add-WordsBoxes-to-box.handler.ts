@@ -3,7 +3,7 @@ import { AddWordsBoxesToBoxCommand } from "../impl/add-wordsBoxes-to-box.command
 import { QueryRunner, DataSource } from "typeorm";
 import { BoxEntity, WordsBoxEntity } from "@src/entities";
 import { GetBox } from "@src/modules/shared/functions/box.handler";
-import { BOX_NOT_FOUND, CustomError } from "@src/common/errors";
+import { BOX_NOT_FOUND, CustomError, WORDS_BOX_NOT_FOUND } from "@src/common/errors";
 import { GetWordsBox } from "@src/modules/shared/functions/wordsBox.helper";
 import { GetUser } from "@src/modules/shared/functions";
 
@@ -51,6 +51,9 @@ export class AddWordsBoxesToBoxHandler implements ICommandHandler<AddWordsBoxesT
             const getWordsBox = await GetWordsBox(this.queryRunner.manager, { id: WordBoxIds[i],user:{
                 id:userId
             } })
+            if(!getWordsBox) {
+                throw new CustomError(WORDS_BOX_NOT_FOUND)
+            }
             wordsBoxes.push(getWordsBox)
         }
         return wordsBoxes

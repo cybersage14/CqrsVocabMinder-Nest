@@ -14,7 +14,7 @@ export const options: DataSourceOptions = {
   password: process.env.DB_PASSWORD,
   database:
     process.env.NODE_ENV === 'tEsT'
-      ? process.env.DB_NAME + '_test'
+      ? 'test'
       : process.env.DB_NAME,
   logging: false,
   synchronize: true,

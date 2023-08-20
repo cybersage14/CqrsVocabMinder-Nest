@@ -1,8 +1,8 @@
 {
-   "name": "nest-vocabMinder",
+   "name": "nest-cqrs-vocabMinder",
    "version": "1.0.0",
    "description": "",
-   "author": "milad",
+   "author": "@sg-milad",
    "license": "MIT",
    "scripts": {
       "build": "nest build",

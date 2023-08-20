@@ -37,7 +37,7 @@ Feel free to customize the task description as needed. This "To-Do" section allo
 ### Installation:
 ``` bash 
 #1. clone this project 
-$ git clone https://github.com/sg-milad/vocabMinder
+$ git clone https://github.com/sg-milad/nest-cqrs-vocabMinder
 #2. go to directory 
 $ cd /vocabMinder
 $ docker-compose up

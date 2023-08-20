@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 services:
   nest:
     env_file:
@@ -8,21 +8,17 @@ services:
     depends_on:
       - db
     ports:
-      - "3000:3000"
+      - 3000:3000
   db:
     image: postgres:latest
     container_name: nest-db
     env_file:
       - .env.example
     restart: always
-    environment:
-      POSTGRES_DB: postgres, postgres_test,
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      DB_HOST: db
     ports:
       - 5432:5432
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - pgdata:/var/lib/postgresql/data
 
 volumes:

@@ -4,7 +4,9 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { entities } from './../../entities';
 
-dotenv.config();
+dotenv.config({
+  path:'./.env.example'
+});
 
 export const options: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -14,8 +16,8 @@ export const options: TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD || 'postgres',
   database:
     process.env.NODE_ENV === 'tEsT'
-      ? process.env.DB_NAME + '_test'
-      : process.env.DB_NAME || 'postgres',
+      ? 'test'
+      : process.env.POSTGRES_DB || 'postgres',
   entities: entities,
   migrationsRun: true,
   synchronize: true,

@@ -40,6 +40,7 @@ Feel free to customize the task description as needed. This "To-Do" section allo
 $ git clone https://github.com/sg-milad/nest-cqrs-vocabMinder
 #2. go to directory 
 $ cd /nest-cqrs-vocabMinder
+$ cp .env.example .env
 $ docker-compose up
 ```
 

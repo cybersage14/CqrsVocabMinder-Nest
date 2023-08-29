@@ -16,13 +16,11 @@ export class AuthService {
   ) { }
 
   async createToken(user: UserEntity) {
-    console.log(user);
     return {
       expiresIn: this.configService.get('JWT_EXPIRATION_TIME'),
       accessToken: this.jwtService.sign({ id: user.id, username: user.firstName }),
       user,
     };
-    
   }
 
   async validateUser(payload: LoginRequestDto): Promise<any> {

@@ -46,16 +46,6 @@ $ docker-compose up
 
 ### [open doc](https://localhost:3000/doc)
 ### Test
-you have to create new database for testing
-
-```bash
-$ docker exec -it nest-db bash 
-$ psql -U postgres
-$ SELECT 'CREATE DATABASE test'
-WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'test')\gexec
-# output: CREATE DATABASE
-```
-### run e2e tests
 ```
 $ npm run test:e2e
 ```

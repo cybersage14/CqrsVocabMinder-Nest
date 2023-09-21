@@ -2,7 +2,7 @@ version: '2'
 services:
   nest:
     env_file:
-      - .env.example
+      - .env
     build: .
     container_name: nest-vocabMinder
     depends_on:
@@ -13,12 +13,18 @@ services:
     image: postgres:latest
     container_name: nest-db
     env_file:
-      - .env.example
+      - .env
     restart: always
     ports:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  redis:
+    image: redis:latest
+    container_name: nest-redis
+    ports:
+      - 6379:6379
+
 volumes:
   pgdata:

@@ -3,7 +3,7 @@ import { join } from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 dotenv.config({
-  path:'./.env.example'
+  path: './.env'
 });
 
 export const options: DataSourceOptions = {

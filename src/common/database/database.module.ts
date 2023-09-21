@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 import { entities } from './../../entities';
 
 dotenv.config({
-  path:'./.env.example'
+  path: './.env'
 });
 
 export const options: TypeOrmModuleOptions = {

@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { useContainer } from 'class-validator';
+import helmet from 'helmet';
 import { TrimStringsPipe } from './common/transformer/trim-strings.pipe';
 import { AppModule } from './app.module';
 import { setupSwagger } from './swagger';
@@ -12,6 +13,8 @@ async function bootstrap() {
   app.setGlobalPrefix('/api');
   // swagger
   setupSwagger(app);
+  // security
+  app.use(helmet());
 
   app.enableCors();
   // pipe
@@ -22,9 +25,8 @@ async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   const PORT = process.env.PORT || 3000;
-
   await app.listen(PORT, async () => {
-    console.log(`listening on port ${await app.getUrl()}`);
+    LoggerService.log(`listening on port ${await app.getUrl()}`);
   });
 }
 

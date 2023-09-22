@@ -25,17 +25,19 @@ import { Redis } from 'ioredis';
     WordsBoxModule,
     BoxModule,
     ThrottlerModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule,],
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      useFactory: (config: ConfigService,) => ({
         throttlers: [
           {
             limit: Number(config.get('THROTTLE_LIMIT')),
             ttl: Number(config.get('THROTTLE_TTL')),
           },
         ],
-        // TODO: refactor redis config
-        storage: new ThrottlerStorageRedisService(new Redis(config.get('REDIS_URL'))),
+        storage: new ThrottlerStorageRedisService(new Redis({
+          host: config.get('REDIS_HOST'),
+          port: Number(config.get('REDIS_PORT')),
+        })),
       }),
     }),
   ],

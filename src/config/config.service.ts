@@ -13,8 +13,14 @@ export interface EnvData {
   DB_USER: string;
   DB_PASSWORD: string;
   DB_NAME: string;
+  JWT_EXPIRATION_TIME: string;
   JWT_SECRET_KEY: string;
   MODE: MODE;
+  APP_ENV: string;
+  THROTTLE_LIMIT: number;
+  THROTTLE_TTL: number;
+  REDIS_HOST: string;
+  REDIS_PORT: number;
 }
 export class ConfigService {
   private readonly envConfig: { [key: string]: string };
